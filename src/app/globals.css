@@ -1,26 +1,44 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+	/* Brand / Primary (purple) */
+	--color-primary-50: #EEEDFE;
+	--color-primary-200: #AFA9EC;
+	--color-primary-400: #7F77DD;
+	--color-primary-600: #534AB7;
+	--color-primary-800: #3C3489;
+	--color-primary-900: #26215C;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+	/* Accent (teal) */
+	--color-accent-50: #E1F5EE;
+	--color-accent-200: #5DCAA5;
+	--color-accent-400: #1D9E75;
+	--color-accent-600: #0F6E56;
+	--color-accent-800: #085041;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+	/* Neutral (grays) */
+	--color-bg: #F1EFE8;
+	--color-surface: #D3D1C7;
+	--color-border: #888780;
+	--color-text-muted: #5F5E5A;
+	--color-text: #2C2C2A;
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+	/* Semantic */
+	--color-success: #639922;
+	--color-success-bg: #EAF3DE;
+	--color-warning: #BA7517;
+	--color-warning-bg: #FAEEDA;
+	--color-error: #E24B4A;
+	--color-error-bg: #FCEBEB;
+	--color-info: #378ADD;
+	--color-info-bg: #E6F1FB;
+
+  /* Typography */
+  	--font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+	--font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+     	/* Icon sizing */
+	--icon-16: 16px;
+	--icon-20: 20px;
+	--icon-24: 24px;
+	--icon-32: 32px;
 }
