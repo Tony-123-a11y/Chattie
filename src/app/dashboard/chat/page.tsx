@@ -120,7 +120,7 @@ function CodeBlock({ code, lang = "html" }: { code: string; lang?: string }) {
 
 // ─── Initial messages ─────────────────────────────────────────────────────────
 
-const HTML_CODE = `<div class="flex h-[1024px] overflow-hidden" data-stitch-vh="h-[1024px]===h-screen">
+const HTML_CODE = `<div class="flex h-[1024px] overflow-hidden">
     <!-- Fixed Sidebar -->
     <aside class="w-[260px] flex-shrink-0 bg-surface border-r">
         <nav>...</nav>
@@ -247,7 +247,7 @@ export default function DashboardPage() {
   };
 
   return (
-  <div className="relative flex flex-col h-full">
+<div className="relative flex flex-col h-full">
 
   {/* Chat history */}
   <div className="flex-1 overflow-y-auto px-6 md:px-[150px] py-6">
