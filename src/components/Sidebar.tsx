@@ -186,10 +186,16 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
 
       <div className="absolute bottom-[calc(100%-8px)] left-2 right-2 bg-white border border-surface rounded-xl shadow-lg py-1.5 z-10">
 
-        <button className="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-text-muted hover:bg-bg transition-colors rounded-lg mx-auto">
+        <Link
+          href="/dashboard/appearance"
+          onClick={() => {
+            onClose();
+          }}
+          className="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-text-muted hover:bg-bg transition-colors rounded-lg mx-auto"
+        >
           <Sun size={16.667} />
           Appearance
-        </button>
+        </Link>
 
         <button className="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-text-muted hover:bg-bg transition-colors rounded-lg mx-auto">
           <User size={16.667} />
