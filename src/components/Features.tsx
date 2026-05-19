@@ -1,6 +1,6 @@
 export default function Features() {
   return (
-    <section className="max-w-6xl mx-auto px-6 py-16 border border-border/30 rounded-3xl">
+    <section id="features" className="max-w-6xl mx-auto px-6 py-16 border border-border/30 rounded-3xl scroll-mt-24">
       <div className="text-center mb-12">
         <h2 className="text-3xl font-semibold text-primary-900">
           Everything you need to work faster

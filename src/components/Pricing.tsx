@@ -1,6 +1,6 @@
 export default function Pricing() {
   return (
-    <section className="max-w-5xl mx-auto px-6 py-20">
+    <section id="pricing" className="max-w-5xl mx-auto px-6 py-20 scroll-mt-24">
       <div className="text-center mb-12">
         <h2 className="text-3xl font-semibold text-primary-900">Simple, transparent pricing</h2>
         <p className="mt-3 text-text-muted">Start for free, upgrade when you need more power.</p>
