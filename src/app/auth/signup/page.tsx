@@ -1,7 +1,55 @@
-import React from 'react'
+"use client"
+import Link from 'next/link';
+import React, { useState } from 'react';
+import { signupUser } from '@/services/auth.service';
+import { Eye, EyeOff } from 'lucide-react';
 
 const page = () => {
-return (
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [agree, setAgree] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      setError("All fields are required.");
+      return;
+    }
+
+    if (!agree) {
+      setError("You must agree to the Terms of Service and Privacy Policy.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const result = await signupUser({
+      name,
+      email,
+      password,
+    });
+
+    setLoading(false);
+    if (result.success) {
+      alert("Signup successful");
+    } else {
+      setError(result.error);
+    }
+    } catch (err: any) {
+      setError(err?.message || "An unexpected error occurred.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
     <main className="min-h-screen bg-bg text-text flex flex-col">
       <div className="flex-1 flex items-center justify-center px-4 py-16">
         <div className="w-full max-w-md bg-white rounded-2xl border border-surface shadow-sm p-10">
@@ -24,12 +72,19 @@ return (
             <div className="flex-1 h-px bg-surface" />
           </div>
 
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            {error && (
+              <div className="bg-red-50 text-red-600 border border-red-200 rounded-lg p-3 text-sm text-center">
+                {error}
+              </div>
+            )}
             <div>
               <label className="block text-sm font-medium text-text mb-1">Full Name</label>
               <input
                 type="text"
                 placeholder="John Doe"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
               />
             </div>
@@ -38,19 +93,38 @@ return (
               <input
                 type="email"
                 placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-text mb-1">Password</label>
-              <input
-                type="password"
-                placeholder="••••••••"
-                className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
-              />
+              <div className="relative flex items-center">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full border border-surface rounded-lg pl-3 pr-10 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 text-text-muted hover:text-text focus:outline-none"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
             </div>
-            <label className="flex items-center gap-2 text-sm text-text-muted">
-              <input type="checkbox" className="rounded border-surface" />
+            <label className="flex items-center gap-2 text-sm text-text-muted cursor-pointer">
+              <input
+                type="checkbox"
+                checked={agree}
+                onChange={(e) => setAgree(e.target.checked)}
+                className="rounded border-surface"
+              />
               <span>
                 I agree to the{" "}
                 <a href="#" className="text-primary-600 hover:underline">Terms of Service</a> and{" "}
@@ -59,13 +133,14 @@ return (
             </label>
             <button
               type="submit"
-              className="w-full bg-primary-800 hover:bg-primary-900 text-white font-medium py-3 rounded-lg transition"
+              disabled={loading}
+              className="w-full bg-primary-800 hover:bg-primary-900 text-white font-medium py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Create Account
+              {loading ? "Creating Account..." : "Create Account"}
             </button>
             <p className="text-center text-sm text-text-muted">
               Already have an account?{" "}
-              <a href="#" className="text-primary-600 font-medium hover:underline">Log in</a>
+              <Link href="/auth/login" className="text-primary-600 font-medium hover:underline">Log in</Link>
             </p>
           </form>
         </div>
