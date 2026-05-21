@@ -3,51 +3,55 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { signupUser } from '@/services/auth.service';
 import { Eye, EyeOff } from 'lucide-react';
+import { account } from '@/lib/appwrite';
+import {
+  signupSchema,
+  type SignupFormData,
+} from "@/lib/validations/auth";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const page = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [agree, setAgree] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [serverError, setServerError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-
-    if (!name.trim() || !email.trim() || !password.trim()) {
-      setError("All fields are required.");
-      return;
-    }
-
-    if (!agree) {
-      setError("You must agree to the Terms of Service and Privacy Policy.");
-      return;
-    }
-
-    setLoading(true);
+  const {
+    register,
+    handleSubmit,
+    formState: {
+      errors,
+      isSubmitting,
+    },
+  } = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
+    mode: "onBlur",
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      agree: false,
+    },
+  });
+  const onSubmit = async (data: SignupFormData) => {
     try {
-      const result = await signupUser({
-      name,
-      email,
-      password,
-    });
+      setServerError("");
 
-    setLoading(false);
-    if (result.success) {
-      alert("Signup successful");
-    } else {
-      setError(result.error);
-    }
-    } catch (err: any) {
-      setError(err?.message || "An unexpected error occurred.");
-    } finally {
-      setLoading(false);
+
+    const user = await signupUser({
+      name:data.name,
+      email:data.email,
+      password:data.password
+    })
+
+    } catch (error) {
+      setServerError(
+        error instanceof Error
+          ? error.message
+          : "Failed to create account"
+      );
     }
   };
+
+
 
   return (
     <main className="min-h-screen bg-bg text-text flex flex-col">
@@ -72,42 +76,53 @@ const page = () => {
             <div className="flex-1 h-px bg-surface" />
           </div>
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            {error && (
-              <div className="bg-red-50 text-red-600 border border-red-200 rounded-lg p-3 text-sm text-center">
-                {error}
-              </div>
-            )}
+          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+
             <div>
               <label className="block text-sm font-medium text-text mb-1">Full Name</label>
               <input
                 type="text"
                 placeholder="John Doe"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                {...register("name")}
                 className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
               />
+
+              {errors.name && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-text mb-1">Email</label>
               <input
                 type="email"
                 placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                {...register("email")}
                 className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
               />
+
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-text mb-1">Password</label>
               <div className="relative flex items-center">
                 <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full border border-surface rounded-lg pl-3 pr-10 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
+                  type="email"
+                  placeholder="you@example.com"
+                  {...register("email")}
+                  className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
                 />
+
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.email.message}
+                  </p>
+                )}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -121,10 +136,15 @@ const page = () => {
             <label className="flex items-center gap-2 text-sm text-text-muted cursor-pointer">
               <input
                 type="checkbox"
-                checked={agree}
-                onChange={(e) => setAgree(e.target.checked)}
+                {...register("agree")}
                 className="rounded border-surface"
               />
+
+              {errors.agree && (
+                <p className="text-sm text-red-500">
+                  {errors.agree.message}
+                </p>
+              )}
               <span>
                 I agree to the{" "}
                 <a href="#" className="text-primary-600 hover:underline">Terms of Service</a> and{" "}
@@ -133,10 +153,12 @@ const page = () => {
             </label>
             <button
               type="submit"
-              disabled={loading}
+              disabled={isSubmitting}
               className="w-full bg-primary-800 hover:bg-primary-900 text-white font-medium py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Creating Account..." : "Create Account"}
+              {isSubmitting
+                ? "Creating Account..."
+                : "Create Account"}
             </button>
             <p className="text-center text-sm text-text-muted">
               Already have an account?{" "}
@@ -154,6 +176,7 @@ const page = () => {
         <span className="text-text-muted">© 2024 Chattie AI. Secure & Encrypted.</span>
       </footer>
     </main>
-  )}
+  )
+}
 
 export default page;
