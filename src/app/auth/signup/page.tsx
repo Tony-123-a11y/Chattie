@@ -3,7 +3,6 @@ import Link from 'next/link';
 import  { useState } from 'react';
 import { signupUser } from '@/services/auth.service';
 import { Eye, EyeOff, Loader, Loader2 } from 'lucide-react';
-import google from '../../../../public/Google__G__logo.svg.png';
 import {
   signupSchema,
   type SignupFormData,
@@ -48,9 +47,7 @@ const page = () => {
     if(!result.success){
       setServerError(result.error);
     }
-    else{
-      setServerError("");
-    }
+  
 
     } catch (error) {
       setServerError(
@@ -132,6 +129,7 @@ const page = () => {
               <div className="relative flex items-center ">
                 <input
                   type={showPassword ? "text ":"password"}
+                  placeholder='••••••••'
                   autoComplete='new-password'
                   {...register("password")}
                   className="w-full border border-surface  rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
@@ -157,6 +155,7 @@ const page = () => {
                 <input
                   type={"password"}
                   {...register("confirmPassword")}
+                  placeholder='••••••••'
                   className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
                 />
 

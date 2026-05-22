@@ -23,9 +23,9 @@ export const signupSchema = z
         /[@$!%*?&]/,
         "Password must contain a special character"
       ),
-agree: z.boolean().refine(val => val === true, {
-  message: "You must accept the terms",
-}),
+    agree: z.boolean().refine(val => val === true, {
+      message: "You must accept the terms",
+    }),
     confirmPassword: z.string(),
   })
   .refine(
@@ -37,3 +37,14 @@ agree: z.boolean().refine(val => val === true, {
   );
 
 export type SignupFormData = z.infer<typeof signupSchema>;
+
+export const loginSchema = z.object({
+  email: z
+    .email("Please enter a valid Email Address")
+    .trim()
+    .toLowerCase(),
+  password: z.
+    string()  
+})
+
+export type LoginFormData = z.infer<typeof loginSchema>;
