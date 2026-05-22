@@ -1,22 +1,25 @@
 "use client"
 import Link from 'next/link';
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { signupUser } from '@/services/auth.service';
-import { Eye, EyeOff } from 'lucide-react';
-import { account } from '@/lib/appwrite';
+import { Eye, EyeOff, Loader, Loader2 } from 'lucide-react';
+import google from '../../../../public/Google__G__logo.svg.png';
 import {
   signupSchema,
   type SignupFormData,
 } from "@/lib/validations/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { loginWithGoogle } from '@/lib/googlelogin';
+import Image from 'next/image';
 
 const page = () => {
-  const [serverError, setServerError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [serverError, setServerError] = useState<string | undefined>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
+    watch,
     formState: {
       errors,
       isSubmitting,
@@ -31,16 +34,23 @@ const page = () => {
       agree: false,
     },
   });
+  const agree= watch("agree")
   const onSubmit = async (data: SignupFormData) => {
     try {
       setServerError("");
-
-
-    const user = await signupUser({
+    const result = await signupUser({
       name:data.name,
       email:data.email,
-      password:data.password
+      password:data.password,
+      agree:data.agree,
     })
+
+    if(!result.success){
+      setServerError(result.error);
+    }
+    else{
+      setServerError("");
+    }
 
     } catch (error) {
       setServerError(
@@ -63,10 +73,12 @@ const page = () => {
           </div>
 
           <button
+          onClick={loginWithGoogle}
             type="button"
-            className="w-full flex items-center justify-center gap-3 border border-surface rounded-lg py-3 text-sm font-medium text-text hover:bg-bg transition"
+            className="w-full cursor-pointer flex items-center justify-center gap-3 border border-surface rounded-lg py-3 text-sm font-medium text-text hover:bg-bg transition"
           >
-            <span className="w-5 h-5 bg-text rounded-sm flex items-center justify-center text-white text-[10px]">G</span>
+          <Image src={'/GoogleLogo.png'} alt='G'   width={22}
+  height={22}/>
             Sign up with Google
           </button>
 
@@ -75,8 +87,15 @@ const page = () => {
             <span className="text-xs text-text-muted whitespace-nowrap">Or create an account</span>
             <div className="flex-1 h-px bg-surface" />
           </div>
-
-          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+ {
+  serverError && <div className='p-4 flex items-center mx-1 rounded-lg justify-center border-red-600 bg-red-100 text-red-500 text-sm'>{serverError}</div>
+ }
+          <form className="space-y-4"  onSubmit={handleSubmit(
+    onSubmit,
+    (errors) => {
+      console.log("Validation failed", errors);
+    }
+  )}>
 
             <div>
               <label className="block text-sm font-medium text-text mb-1">Full Name</label>
@@ -110,19 +129,13 @@ const page = () => {
             </div>
             <div>
               <label className="block text-sm font-medium text-text mb-1">Password</label>
-              <div className="relative flex items-center">
+              <div className="relative flex items-center ">
                 <input
-                  type="email"
-                  placeholder="you@example.com"
-                  {...register("email")}
-                  className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
+                  type={showPassword ? "text ":"password"}
+                  autoComplete='new-password'
+                  {...register("password")}
+                  className="w-full border border-surface  rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
                 />
-
-                {errors.email && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {errors.email.message}
-                  </p>
-                )}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -132,6 +145,28 @@ const page = () => {
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
+               {errors.password && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.password.message}
+                  </p>
+                )}
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-text mb-1">Confirm Password</label>
+        
+                <input
+                  type={"password"}
+                  {...register("confirmPassword")}
+                  className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
+                />
+
+                {errors.confirmPassword && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
+               
+             
             </div>
             <label className="flex items-center gap-2 text-sm text-text-muted cursor-pointer">
               <input
@@ -153,11 +188,11 @@ const page = () => {
             </label>
             <button
               type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-primary-800 hover:bg-primary-900 text-white font-medium py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={isSubmitting || !agree}
+              className="w-full bg-primary-800 hover:bg-primary-900 flex items-center justify-center text-white font-medium py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting
-                ? "Creating Account..."
+                ? <Loader2 className='animate-spin'/>
                 : "Create Account"}
             </button>
             <p className="text-center text-sm text-text-muted">

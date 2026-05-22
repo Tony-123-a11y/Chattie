@@ -1,4 +1,6 @@
-import React from 'react'
+import { loginWithGoogle } from '@/lib/googlelogin';
+import Image from 'next/image';
+
 
 const page = () => {
 return (
@@ -11,10 +13,12 @@ return (
           </div>
 
           <button
+          onClick={loginWithGoogle}
             type="button"
-            className="w-full flex items-center justify-center gap-3 border border-surface rounded-lg py-3 text-sm font-medium text-text hover:bg-bg transition"
+            className="w-full flex cursor-pointer items-center justify-center gap-3 border border-surface rounded-lg py-3 text-sm font-medium text-text hover:bg-bg transition"
           >
-            <span className="w-5 h-5 bg-text rounded-sm flex items-center justify-center text-white text-[10px]">G</span>
+                <Image src={'/GoogleLogo.png'} alt='G'   width={22}
+              height={22}/>
             Sign up with Google
           </button>
 

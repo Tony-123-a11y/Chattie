@@ -23,8 +23,9 @@ export const signupSchema = z
         /[@$!%*?&]/,
         "Password must contain a special character"
       ),
-      agree:z.boolean(),
-
+agree: z.boolean().refine(val => val === true, {
+  message: "You must accept the terms",
+}),
     confirmPassword: z.string(),
   })
   .refine(
