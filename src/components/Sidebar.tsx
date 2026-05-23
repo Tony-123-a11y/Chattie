@@ -14,6 +14,8 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { useUser } from "@/hooks/useUser";
+import { logOutUser } from "@/services/auth.service";
 
 const recentChats = [
   "Design System architecture",
@@ -22,7 +24,7 @@ const recentChats = [
 ];
 
 const navLinks = [
-  { href: "/dashboard/help", label: "Help", icon: HelpCircle },
+  { href: "/login", label: "Help", icon: HelpCircle },
 ];
 
 interface SidebarProps {
@@ -31,9 +33,15 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
+  const {setUser,setLoading}=useUser();
   const pathname = usePathname();
   const [settingsOpen, setSettingsOpen] = useState(false);
-
+  const logOut =async()=>{
+   const {success}= await logOutUser();
+    if(success){
+       setUser(null)
+    }
+  }
   return (
     <>
       {/* Mobile overlay */}
@@ -199,6 +207,10 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
                 <User size={16.667} />
                 Account
               </Link>
+               <button onClick={logOut} className="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-text-muted hover:bg-bg transition-colors rounded-lg mx-auto">
+                <User size={16.667} />
+                Account
+              </button>
             </div>
           )}
         </div>

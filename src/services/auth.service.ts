@@ -8,23 +8,30 @@ export async function signupUser({ name, email, password }: SignupData) {
     try {
         //create user
 
-        const newUser = await account.create(
+        await account.create(
             ID.unique(),
             email,
             password,
             name
         );
 
-        //Automatically log user in after signup
+        await account.deleteSession("current");
 
+        await account.createEmailPasswordSession(
+            email,
+            password,
+        )
+        const currentUser =
+            await account.get();
         return {
             success: true,
-            data:newUser 
+            currentUser
         }
+
     } catch (err) {
-        
+
         if (err instanceof AppwriteException) {
-  
+
             switch (err.code) {
                 case 409:
                     return {
@@ -47,44 +54,74 @@ export async function signupUser({ name, email, password }: SignupData) {
                     };
             }
         }
-          return {
-    success: false,
-    error: "Unexpected error occurred.",
-  };
+        return {
+            success: false,
+            error: "Unexpected error occurred.",
+        };
     }
 
 }
 
-export async function loginUser(data:LoginFormData) {
+export async function loginUser(data: LoginFormData) {
     try {
-        // await account.deleteSession();
-        const session= await account.createEmailPasswordSession(
+        await account.deleteSession("current");
+        
+        await account.createEmailPasswordSession(
             data.email,
             data.password
         )
+        const currentUser =
+            await account.get();
         return {
-            success:true,
-            session
+            success: true,
+            currentUser
         }
     } catch (err) {
-           if (err instanceof AppwriteException) {
-          switch (err.code) {
-                 case 401:
-        return {
-            success: false,
-            error: "Invalid email or password"
-        };
+        if (err instanceof AppwriteException) {
+            switch (err.code) {
+                case 401:
+                    return {
+                        success: false,
+                        error: "Invalid email or password"
+                    };
 
-    default:
-        return {
-            success: false,
-            error: "Something went wrong. Please try again."
-        };
+                default:
+                    return {
+                        success: false,
+                        error: "Something went wrong. Please try again."
+                    };
             }
         }
-          return {
-    success: false,
-    error: "Unexpected error occurred.",
-  };
+        return {
+            success: false,
+            error: "Unexpected error occurred.",
+        };
     }
+}
+
+export async function getUser(){
+    try {
+          const currentUser= await account.get();
+    if(!currentUser){
+       return null;
+    }
+    return currentUser;
+    } catch (error) {
+        console.log(error)
+    }
+  
+}
+
+export async function logOutUser():Promise<{ success: boolean; }> {
+  try {
+    await account.deleteSession("current");
+
+    return {
+      success: true,
+    };
+  } catch {
+    return {
+      success: false,
+    };
+  }
 }

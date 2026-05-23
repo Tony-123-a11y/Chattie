@@ -3,10 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { MessageSquare, Menu, X } from "lucide-react";
+import { useUser } from "@/hooks/useUser";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-
+   const {user}=useUser();
+   console.log(user)
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
@@ -41,20 +43,29 @@ export default function Navbar() {
         </nav>
 
         {/* Desktop CTA Buttons */}
-        <div className="hidden md:flex items-center gap-4">
+        {
+          user ? <Link href={'/dashboard'} className="w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center shadow-sm">
+            <span className="text-primary-50 font-bold text-lg leading-none font-sans">
+              A
+            </span>
+          </Link>
+          :
+            <div className="hidden md:flex items-center gap-4">
           <Link
-            href="/auth/login"
+            href="/login"
             className="text-sm font-medium text-text-muted hover:text-primary-900 transition-colors px-3 py-2"
           >
             Log In
           </Link>
           <Link
-            href="/auth/signup"
+            href="/signup"
             className="bg-primary-800 hover:bg-primary-900 text-white px-4.5 py-2.5 rounded-lg text-sm font-medium transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 duration-200"
           >
             Get Started Free
           </Link>
         </div>
+        }
+      
 
         {/* Mobile Menu Button */}
         <button
@@ -90,14 +101,14 @@ export default function Navbar() {
           <hr className="border-border/10 my-1" />
           <div className="flex flex-col gap-3">
             <Link
-              href="/auth/login"
+              href="/login"
               onClick={() => setIsOpen(false)}
               className="text-center text-sm font-medium text-text-muted hover:text-primary-900 py-2.5 transition-colors rounded-lg border border-border/25 bg-white/50"
             >
               Log In
             </Link>
             <Link
-              href="/auth/signup"
+              href="/signup"
               onClick={() => setIsOpen(false)}
               className="text-center text-sm font-medium bg-primary-800 hover:bg-primary-900 text-white py-2.5 rounded-lg shadow-sm transition-colors"
             >

@@ -11,10 +11,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginWithGoogle } from '@/lib/googlelogin';
 import Image from 'next/image';
+import { useUser } from '@/hooks/useUser';
 
 const page = () => {
-  const [serverError, setServerError] = useState<string | undefined>("");
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+    const {  setUser } = useUser();
+    const [serverError, setServerError] = useState<string | undefined>("");
+    const [showPassword, setShowPassword] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -46,7 +48,10 @@ const page = () => {
 
     if(!result.success){
       setServerError(result.error);
+      return;
     }
+          if (result.currentUser)
+        setUser(result.currentUser);
   
 
     } catch (error) {
@@ -196,7 +201,7 @@ const page = () => {
             </button>
             <p className="text-center text-sm text-text-muted">
               Already have an account?{" "}
-              <Link href="/auth/login" className="text-primary-600 font-medium hover:underline">Log in</Link>
+              <Link href="/login" className="text-primary-600 font-medium hover:underline">Log in</Link>
             </p>
           </form>
         </div>

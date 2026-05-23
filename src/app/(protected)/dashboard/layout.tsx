@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Menu } from "lucide-react";
 import Sidebar from "@/components/Sidebar";
+import { useUser } from "@/hooks/useUser";
 
 export default function DashboardLayout({
   children,
@@ -10,7 +11,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+ const{user}= useUser();
   return (
    <div className="flex h-screen overflow-hidden bg-bg font-sans">
   {/* Sidebar */}
