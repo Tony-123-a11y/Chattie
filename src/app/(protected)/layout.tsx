@@ -8,20 +8,24 @@ import React, { useEffect } from "react";
  const ProtectedRoute=({children}:{children:React.ReactNode})=>{
     const router= useRouter();
     const {user,loading}= useUser();
-    useEffect(()=>{
-         if(!user && loading){
-        router.push("/");
-    }
-    },[user, loading])
+  useEffect(() => {
+  if (loading) return;
+
+  if (!user) {
+    router.replace("/login");
+  }
+}, [loading, user]);
   
-    return(
-        <>
-        {
-            loading ? <LoaderPage/> : children
-        }
-        
-        </>
-    )
+    if (loading) {
+  return <LoaderPage />;
+}
+
+if (!user) {
+  return <LoaderPage />;
+}
+
+return children;
+    
     
 }
 

@@ -46,9 +46,6 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
     }
     } catch (error) {
       console.log(error)
-    }finally{
-      setLoading(false)
-      
     }
  
   }

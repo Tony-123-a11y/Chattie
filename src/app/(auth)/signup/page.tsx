@@ -193,7 +193,7 @@ const page = () => {
             <button
               type="submit"
               disabled={isSubmitting || !agree}
-              className="w-full bg-primary-800 hover:bg-primary-900 flex items-center justify-center text-white font-medium py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-primary-800 cursor-pointer  hover:bg-primary-900 flex items-center justify-center text-white font-medium py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting
                 ? <Loader2 className='animate-spin'/>

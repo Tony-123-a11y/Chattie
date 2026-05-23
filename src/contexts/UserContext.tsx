@@ -28,7 +28,6 @@ const [loading,setLoading]= useState<boolean>(true);
 
 async function fetchUser(){
   try {
-      setLoading(true)
     const currentUser= await getUser();
     setLoading(false)
     if(currentUser)

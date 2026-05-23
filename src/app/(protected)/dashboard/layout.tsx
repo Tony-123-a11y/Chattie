@@ -12,6 +12,7 @@ export default function DashboardLayout({
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
  const{user}= useUser();
+ console.log(user)
   return (
    <div className="flex h-screen overflow-hidden bg-bg font-sans">
   {/* Sidebar */}

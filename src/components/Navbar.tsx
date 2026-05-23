@@ -8,7 +8,6 @@ import { useUser } from "@/hooks/useUser";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
    const {user}=useUser();
-   console.log(user)
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
