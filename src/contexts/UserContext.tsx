@@ -23,7 +23,7 @@ export const UserProvider=({children}:{children:React.ReactNode})=>{
     // Global Initital State
 const [user,setUser] = useState<Models.User<Models.Preferences> | null>(null)
    // Global Loading State
-const [loading,setLoading]= useState<boolean>(false);
+const [loading,setLoading]= useState<boolean>(true);
    // Fetch User when application initializes in browser
 
 async function fetchUser(){

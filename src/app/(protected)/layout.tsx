@@ -1,21 +1,25 @@
 "use client"
 
 import { useUser } from "@/hooks/useUser"
+import LoaderPage from "@/components/LoaderPage"
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
         
  const ProtectedRoute=({children}:{children:React.ReactNode})=>{
     const router= useRouter();
-    const {user}= useUser();
+    const {user,loading}= useUser();
     useEffect(()=>{
-         if(!user){
+         if(!user && loading){
         router.push("/");
     }
-    },[user])
+    },[user, loading])
   
     return(
         <>
-        {children}
+        {
+            loading ? <LoaderPage/> : children
+        }
+        
         </>
     )
     

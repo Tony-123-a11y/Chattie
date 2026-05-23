@@ -64,8 +64,6 @@ export async function signupUser({ name, email, password }: SignupData) {
 
 export async function loginUser(data: LoginFormData) {
     try {
-        await account.deleteSession("current");
-        
         await account.createEmailPasswordSession(
             data.email,
             data.password
@@ -78,6 +76,7 @@ export async function loginUser(data: LoginFormData) {
         }
     } catch (err) {
         if (err instanceof AppwriteException) {
+            console.log(err)
             switch (err.code) {
                 case 401:
                     return {

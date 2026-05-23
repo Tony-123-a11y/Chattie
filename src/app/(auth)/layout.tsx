@@ -3,19 +3,22 @@
 import { useUser } from "@/hooks/useUser"
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import LoaderPage from "@/components/LoaderPage"
 
 const AuthProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
-    const { user } = useUser();
+    const { user,loading } = useUser();
    useEffect(()=>{
-           if(user){
+           if(user && !loading){
           router.push("/dashboard");
       }
-      },[user])
+      },[user,loading])
     
     return (
         <>
-            {children}
+            {
+            loading ? <LoaderPage/> : children
+        }
         </>
     )
 

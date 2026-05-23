@@ -13,6 +13,7 @@ import {
   User,
   Menu,
   X,
+  LogOut,
 } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
 import { logOutUser } from "@/services/auth.service";
@@ -37,10 +38,19 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const logOut =async()=>{
+    setLoading(true)
+    try {
    const {success}= await logOutUser();
     if(success){
        setUser(null)
     }
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setLoading(false)
+      
+    }
+ 
   }
   return (
     <>
@@ -181,7 +191,7 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
 
             <button
               onClick={() => setSettingsOpen((v) => !v)}
-              className="text-text-muted hover:text-text transition-colors p-1"
+              className="text-text-muted cursor-pointer  hover:text-text transition-colors p-1"
             >
               <Settings size={20} />
             </button>
@@ -197,19 +207,19 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
                 onClick={() => {
                   onClose();
                 }}
-                className="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-text-muted hover:bg-bg transition-colors rounded-lg mx-auto"
+                className="w-full flex items-center gap-3 px-3 py-2 cursor-pointer  text-[13px] text-text-muted hover:bg-bg transition-colors rounded-lg mx-auto"
               >
                 <Sun size={16.667} />
                 Appearance
               </Link>
 
-              <Link href={"/dashboard/settings"} className="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-text-muted hover:bg-bg transition-colors rounded-lg mx-auto">
+              <Link href={"/dashboard/settings"} className="w-full cursor-pointer  flex items-center gap-3 px-3 py-2 text-[13px] text-text-muted hover:bg-bg transition-colors rounded-lg mx-auto">
                 <User size={16.667} />
                 Account
               </Link>
-               <button onClick={logOut} className="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-text-muted hover:bg-bg transition-colors rounded-lg mx-auto">
-                <User size={16.667} />
-                Account
+               <button onClick={logOut} className="w-full cursor-pointer flex items-center gap-3 px-3 py-2 text-[13px] text-text-muted hover:bg-bg transition-colors rounded-lg mx-auto">
+                <LogOut size={16.667} />
+                Logout
               </button>
             </div>
           )}
