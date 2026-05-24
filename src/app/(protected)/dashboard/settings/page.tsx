@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { AlertTriangle, ChevronRight } from "lucide-react";
+import { useUser } from "@/hooks/useUser";
 
 export default function AccountSettingsPage() {
   const [fullName, setFullName] = useState("Alex Architect");
   const [email, setEmail] = useState("alex@chattie.ai");
   const [twoFactor, setTwoFactor] = useState(false);
   const [deleteStep, setDeleteStep] = useState(0);
-
+  const {user}=useUser();
   const handleSaveChanges = () => {
     // TODO: call API to save profile changes
     alert("Profile changes saved.");
@@ -82,7 +83,7 @@ export default function AccountSettingsPage() {
                 </label>
                 <input
                   type="text"
-                  value={fullName}
+                  value={user?.name}
                   onChange={(e) => setFullName(e.target.value)}
                   className="w-full px-3 py-2.5 text-sm text-text border border-[#D1D5DB] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition"
                 />
@@ -93,7 +94,7 @@ export default function AccountSettingsPage() {
                 </label>
                 <input
                   type="email"
-                  value={email}
+                  value={user?.email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-3 py-2.5 text-sm text-text border border-[#D1D5DB] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition"
                 />

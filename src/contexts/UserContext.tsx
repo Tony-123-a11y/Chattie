@@ -2,7 +2,7 @@
 import react, { useEffect, useState } from "react";
 import React from "react";
 import { Models } from "appwrite";
-import { getUser } from "@/services/auth.service";
+import { getUser } from "@/services/client/auth.service";
 
 
 // Interface for User Context

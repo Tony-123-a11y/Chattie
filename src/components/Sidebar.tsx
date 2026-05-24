@@ -16,7 +16,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
-import { logOutUser } from "@/services/auth.service";
+import { logOutUser } from "@/services/client/auth.service";
 
 const recentChats = [
   "Design System architecture",

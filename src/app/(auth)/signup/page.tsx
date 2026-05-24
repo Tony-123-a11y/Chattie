@@ -1,7 +1,7 @@
 "use client"
 import Link from 'next/link';
 import  { useState } from 'react';
-import { signupUser } from '@/services/auth.service';
+import { signupUser } from '@/services/client/auth.service';
 import { Eye, EyeOff, Loader, Loader2 } from 'lucide-react';
 import {
   signupSchema,

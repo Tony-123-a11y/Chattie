@@ -44,6 +44,7 @@ const suggestions = [
 
 export default function NewChatPage() {
   const [input, setInput] = useState("");
+  const [reply,setReply]= useState(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Auto-resize textarea
@@ -66,12 +67,26 @@ export default function NewChatPage() {
     }
   };
 
-  const handleSend = () => {
+  const handleSend = async() => {
     if (!input.trim()) return;
-    // navigate to chat or trigger message — hook into your chat logic here
-    console.log("Sending:", input);
+    try {
+          const response= await fetch("/api/chat/",{
+      method:"POST",
+      headers: {
+        "Content-Type":"application/json",
+      },
+      body:JSON.stringify({message:input}),
+     })
+    
+    const data = await response.json();
+
+    console.log("AI Reply:", data);
     setInput("");
     if (textareaRef.current) textareaRef.current.style.height = "auto";
+    } catch (error) {
+      console.log(error)
+    }
+ 
   };
 
   return (

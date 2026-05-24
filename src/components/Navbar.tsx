@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { MessageSquare, Menu, X } from "lucide-react";
+import { MessageSquare, Menu, X, Loader2 } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-   const {user}=useUser();
+   const {user,loading}=useUser();
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
@@ -43,12 +43,17 @@ export default function Navbar() {
 
         {/* Desktop CTA Buttons */}
         {
-          user ? <Link href={'/dashboard'} className="w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center shadow-sm">
-            <span className="text-primary-50 font-bold text-lg leading-none font-sans">
-              A
+          loading ? (<div  className="w-8 h-8 relative rounded-full bg-primary-600 flex items-center justify-center shadow-sm">
+            <span className="bg-primary-50/40 absolute inset-0 flex items-center justify-center  font-bold text-lg leading-none font-sans">
+              <Loader2 className="animate-spin text-white" size={18}/>
             </span>
-          </Link>
-          :
+          </div>)
+          : user ? 
+          (<Link href={'/dashboard'} className="w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center shadow-sm">
+            <span className="text-primary-50 font-bold text-lg leading-none font-sans">
+              {user.name[0]}
+            </span>
+          </Link>) : (
             <div className="hidden md:flex items-center gap-4">
           <Link
             href="/login"
@@ -62,7 +67,7 @@ export default function Navbar() {
           >
             Get Started Free
           </Link>
-        </div>
+        </div>)
         }
       
 

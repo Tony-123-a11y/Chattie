@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { type LoginFormData, loginSchema } from '@/lib/validations/auth';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import { loginUser } from '@/services/auth.service';
+import { loginUser } from '@/services/client/auth.service';
 import { useState } from 'react';
 import { useUser } from '@/hooks/useUser';
 
