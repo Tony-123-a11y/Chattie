@@ -70,7 +70,7 @@ export default function NewChatPage() {
   const handleSend = async() => {
     if (!input.trim()) return;
     try {
-          const response= await fetch("/api/chat/",{
+      const response= await fetch("/api/chat/",{
       method:"POST",
       headers: {
         "Content-Type":"application/json",
