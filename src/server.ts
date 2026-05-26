@@ -1,4 +1,4 @@
-import { chatHandler } from "./services/server/chatHandler.js";
+import  chatHandler  from "./services/server/chatHandler.js";
 
 export default async ({ req, res, log }: {
   req: {

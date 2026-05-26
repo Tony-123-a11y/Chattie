@@ -1,7 +1,7 @@
 import { ai } from "@/lib/gemini"
 import { Req,Res } from "@/types/handlerTypes"
 
-export async function chatHandler (req:Req,res:Res){
+export default async function chatHandler (req:Req,res:Res){
     try {
         const {message}= await JSON.parse(req.body);
         const aiReply= await ai.models.generateContent({
