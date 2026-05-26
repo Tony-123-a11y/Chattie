@@ -1,3 +1,5 @@
+import { chatHandler } from "./services/server/chatHandler";
+
 export default async ({ req, res, log }: {
   req: {
     body: string;
@@ -13,15 +15,26 @@ export default async ({ req, res, log }: {
   error: (msg: string) => void;
 }) => {
   log('Function triggered successfully');
+  try {
+      const {action} = req.body ? JSON.parse(req.body) : {};
 
-  const body = req.body ? JSON.parse(req.body) : {};
-  const name: string = body.name ?? 'stranger';
+    switch (action) {
+    case "chat":
+      return  chatHandler(req,res);
 
-  return res.json({
-    success: true,
-    message: `Hello, ${name}!`,
-    method: req.method,
-    path: req.path,
-    timestamp: new Date().toISOString(),
-  });
+    case "title":
+      return res.json({
+        title: "New Chat"
+      });
+
+    default:
+      return res.json({
+        error: "Unknown action"
+      }, 400);
+  }
+  } catch (error) {
+    console.log("Error from starter function",error);
+  }
+
+
 };
