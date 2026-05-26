@@ -1,5 +1,5 @@
-import { ai } from "@/lib/gemini"
-import { Req,Res } from "@/types/handlerTypes"
+import { ai } from "../../lib/gemini.js"
+import { Req,Res } from "../../types/handlerTypes.js"
 
 export default async function chatHandler (req:Req,res:Res){
     try {
