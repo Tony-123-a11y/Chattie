@@ -13,6 +13,7 @@ import {
   MoreVertical,
   Sparkles,
 } from "lucide-react";
+import { functions } from "@/lib/appwrite";
 
 // ── Suggestion cards data ─────────────────────────────────────────────────────
 
@@ -69,18 +70,17 @@ export default function NewChatPage() {
 
   const handleSend = async() => {
     if (!input.trim()) return;
+    console.log(input)
     try {
-      const response= await fetch("/api/chat/",{
-      method:"POST",
-      headers: {
-        "Content-Type":"application/json",
-      },
-      body:JSON.stringify({message:input}),
-     })
-    
-    const data = await response.json();
+   
+const result = await functions.createExecution(
+  '6a167b6c0020049b4351',
+  JSON.stringify({ action:"chat",message: input }), // body (optional)
+);
 
-    console.log("AI Reply:", data);
+const reply=(JSON.parse(result.responseBody).reply.candidates[0].content.parts[0].text)
+setReply(reply)
+
     setInput("");
     if (textareaRef.current) textareaRef.current.style.height = "auto";
     } catch (error) {
@@ -184,6 +184,8 @@ export default function NewChatPage() {
           </button>
         ))}
       </div>
+
+      {reply && <div>{reply}</div>}
 
       {/* Input */}
       <div className="w-full bg-white border border-surface rounded-2xl shadow-sm overflow-hidden focus-within:border-primary-200 focus-within:shadow-md transition-all duration-200">
