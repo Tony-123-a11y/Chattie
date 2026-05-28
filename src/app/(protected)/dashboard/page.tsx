@@ -14,7 +14,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import { functions } from "@/lib/appwrite";
-
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from "remark-gfm";
 // ── Suggestion cards data ─────────────────────────────────────────────────────
 
 const suggestions = [
@@ -45,6 +46,7 @@ const suggestions = [
 
 export default function NewChatPage() {
   const [input, setInput] = useState("");
+  const [suggest,setSuggest]= useState(true);
   const [reply,setReply]= useState(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -70,7 +72,7 @@ export default function NewChatPage() {
 
   const handleSend = async() => {
     if (!input.trim()) return;
-    console.log(input)
+    setSuggest(false)
     try {
    
 const result = await functions.createExecution(
@@ -138,10 +140,16 @@ setReply(reply)
   </div>
 
   {/* Main content */}
-  <div className="flex-1 overflow-y-auto flex flex-col items-center justify-center px-6 py-10">
-    <div className="w-full max-w-[600px] flex flex-col items-center gap-8">
+  <div className="h-screen  py-10">
+    <div className="w-full h-full   overflow-y-scroll  gap-8">
+   <div className="max-w-3xl m-auto  pb-24">
+    
 
-      {/* Header */}
+     {/* Header and Suggestions */}
+      {
+        suggest &&
+           <>
+        {/* Header */}
       <div className="flex flex-col items-center gap-4 text-center">
 
         <div className="w-14 h-14 rounded-2xl bg-white border border-surface shadow-sm flex items-center justify-center">
@@ -159,9 +167,8 @@ setReply(reply)
           </p>
         </div>
       </div>
-
-      {/* Suggestions */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full">
+      {/* suggestions */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3  w-full">
         {suggestions.map(({ id, icon: Icon, label, sublabel, prompt }) => (
           <button
             key={id}
@@ -183,12 +190,25 @@ setReply(reply)
             </div>
           </button>
         ))}
-      </div>
+      </div> 
+      </>
 
-      {reply && <div>{reply}</div>}
+}
 
+      {reply && <div className="  prose
+  max-w-none
+  prose-p:my-2
+  prose-pre:bg-gray-100
+  prose-code:text-accent-600">
+  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+    {reply}
+  </ReactMarkdown>
+</div>
+}
+   </div>
+</div>
       {/* Input */}
-      <div className="w-full bg-white border border-surface rounded-2xl shadow-sm overflow-hidden focus-within:border-primary-200 focus-within:shadow-md transition-all duration-200">
+      <div className="w-full bg-white  relative -left-2 -top-20 max-w-3xl m-auto border-surface border  rounded-2xl shadow-sm overflow-hidden focus-within:border-primary-200 focus-within:shadow-md transition-all duration-200">
 
         <textarea
           ref={textareaRef}
@@ -232,8 +252,6 @@ setReply(reply)
       <p className="text-[11px] text-border text-center tracking-[0.22px]">
         Chattie can make mistakes. Check important info.
       </p>
-
-    </div>
   </div>
 </div>
   );
