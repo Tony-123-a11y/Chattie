@@ -12,10 +12,12 @@ import {
   Bell,
   MoreVertical,
   Sparkles,
+  Loader2,
 } from "lucide-react";
 import { functions } from "@/lib/appwrite";
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from "remark-gfm";
+import { Message } from "@/types/message";
 // ── Suggestion cards data ─────────────────────────────────────────────────────
 
 const suggestions = [
@@ -49,6 +51,8 @@ export default function NewChatPage() {
   const [suggest,setSuggest]= useState(true);
   const [reply,setReply]= useState(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [loading,setLoading]= useState(false);
+  const [messages,setMessages]= useState<Message[]>([]);
 
   // Auto-resize textarea
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -73,16 +77,28 @@ export default function NewChatPage() {
   const handleSend = async() => {
     if (!input.trim()) return;
     setSuggest(false)
+    setMessages((prev)=> [...prev, {
+      id:crypto.randomUUID(),
+      text:input,
+      role:"user",
+      createdAt:new Date(),
+    }])
+    setLoading(true);
     try {
    
 const result = await functions.createExecution(
   '6a167b6c0020049b4351',
   JSON.stringify({ action:"chat",message: input }), // body (optional)
 );
+setLoading(false);
 
 const reply=(JSON.parse(result.responseBody).reply.candidates[0].content.parts[0].text)
-setReply(reply)
-
+   setMessages((prev)=> [...prev, {
+      id:crypto.randomUUID(),
+      text:reply,
+      role:"user",
+      createdAt:new Date(),
+    }])
     setInput("");
     if (textareaRef.current) textareaRef.current.style.height = "auto";
     } catch (error) {
@@ -168,7 +184,7 @@ setReply(reply)
         </div>
       </div>
       {/* suggestions */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3  w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4 w-full">
         {suggestions.map(({ id, icon: Icon, label, sublabel, prompt }) => (
           <button
             key={id}
@@ -194,21 +210,33 @@ setReply(reply)
       </>
 
 }
-
-      {reply && <div className="  prose
+     {/* Chat */}
+       
+        <div className=" relative prose
   max-w-none
   prose-p:my-2
   prose-pre:bg-gray-100
   prose-code:text-accent-600">
+    {
+      messages.map((message,i)=>{
+       return <div>
   <ReactMarkdown remarkPlugins={[remarkGfm]}>
-    {reply}
-  </ReactMarkdown>
+      {message.text}
+ </ReactMarkdown>
+           </div>
+      })
+    }
+    {
+        loading &&  
+    <Loader2 className="animate-spin absolute -bottom-10 right-0"/>
+    
+    }
 </div>
-}
+
    </div>
 </div>
       {/* Input */}
-      <div className="w-full bg-white  relative -left-2 -top-20 max-w-3xl m-auto border-surface border  rounded-2xl shadow-sm overflow-hidden focus-within:border-primary-200 focus-within:shadow-md transition-all duration-200">
+      <div className="w-full bg-white  relative -left-2 -top-24 max-w-3xl m-auto border-surface border  rounded-2xl shadow-sm overflow-hidden focus-within:border-primary-200 focus-within:shadow-md transition-all duration-200">
 
         <textarea
           ref={textareaRef}
