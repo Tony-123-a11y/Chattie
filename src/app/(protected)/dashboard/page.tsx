@@ -50,7 +50,7 @@ const suggestions = [
 export default function NewChatPage() {
   const [input, setInput] = useState("");
   const [suggest, setSuggest] = useState(true);
-  const [reply, setReply] = useState(null);
+  const [chatId, setchatId] = useState(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -88,21 +88,22 @@ export default function NewChatPage() {
     setInput("");
 textareaRef.current?.style.setProperty("height", "auto");
     try {
-
+  console.log("chatId:",chatId)
       const result = await functions.createExecution(
         '6a167b6c0020049b4351',
-        JSON.stringify({ action: "chat", message: input }), // body (optional)
+        JSON.stringify({ action: "chat", message: input, chatId }), // body (optional)
       );
       console.log(result.responseBody)
       setLoading(false);
 
-      const reply = (JSON.parse(result.responseBody)).reply;
+      const reply = (JSON.parse(result.responseBody));
       setMessages((prev) => [...prev, {
         id: crypto.randomUUID(),
-        text: reply,
+        text: reply.reply,
         role: "gemini",
         createdAt: new Date(),
       }])
+      setchatId(reply.chatId)
       if (textareaRef.current) textareaRef.current.style.height = "auto";
     } catch (error) {
       console.log(error)
