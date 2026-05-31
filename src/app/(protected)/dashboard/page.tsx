@@ -86,16 +86,17 @@ export default function NewChatPage() {
     }])
     setLoading(true);
     setInput("");
+textareaRef.current?.style.setProperty("height", "auto");
     try {
 
       const result = await functions.createExecution(
         '6a167b6c0020049b4351',
         JSON.stringify({ action: "chat", message: input }), // body (optional)
       );
-      console.log(result)
+      console.log(result.responseBody)
       setLoading(false);
 
-      const reply = (JSON.parse(result.responseBody).reply.candidates[0].content.parts[0].text)
+      const reply = (JSON.parse(result.responseBody)).reply;
       setMessages((prev) => [...prev, {
         id: crypto.randomUUID(),
         text: reply,
@@ -160,7 +161,7 @@ export default function NewChatPage() {
       {/* Main content */}
       <div className="min-h-screen  relative ">
         <div className="w-full  h-full  overflow-y-scroll py-10 gap-8 pb-20">
-          <div className="max-w-3xl m-auto relative pb-24">
+          <div className="max-w-3xl  m-auto relative pb-24">
 
 
             {/* Header and Suggestions */}
@@ -217,16 +218,12 @@ export default function NewChatPage() {
 
             {
               messages.map((message) => (
-                <div key={message.id}>
+                <div key={message.id} >
                   {message.role === "user" ? (
-                    <div className="flex items-start gap-3 justify-end">
-                      <div className="flex flex-col gap-1 max-w-[80%] items-end">
-                        <div className="bg-primary-50 border border-primary-200 text-primary-900 rounded-2xl rounded-tr-none px-4 py-3 shadow-sm">
+                 <div className="bg-primary-50 overflow-x-auto ml-auto mt-8 border-primary-200 max-w-2/3 text-primary-900 rounded-2xl rounded-tr-none px-4 py-3 shadow-sm">
                           <ReactMarkdown remarkPlugins={[remarkGfm]}>
                             {message.text}
                           </ReactMarkdown>
-                        </div>
-                      </div>
                     </div>
                   ) : (
              <div className=" relative prose
