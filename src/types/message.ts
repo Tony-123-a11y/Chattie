@@ -8,7 +8,7 @@ export interface Message{
     updatedAt?:Date;
 }
 
-export interface Chat <T>{
+export interface Chat {
     id:string;
     title:string;
     createdAt:Date;

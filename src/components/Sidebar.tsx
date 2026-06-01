@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  MessageSquare,
   Search,
   HelpCircle,
   Plus,
@@ -17,12 +16,8 @@ import {
 } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
 import { logOutUser } from "@/services/client/auth.service";
-
-const recentChats = [
-  "Design System architecture",
-  "Tailwind config setup",
-  "UI Component ideas",
-];
+import { getChats } from "@/services/client/chat.service";
+import { Chat } from "@/types/message";
 
 const navLinks = [
   { href: "/login", label: "Help", icon: HelpCircle },
@@ -37,18 +32,26 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   const {setUser,setLoading}=useUser();
   const pathname = usePathname();
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const logOut =async()=>{
-    setLoading(true)
+  const [chats, setChats] = useState<Chat[]>([]);
+   console.log(chats)
+  // Fetch all chats on mount
+  useEffect(() => {
+    getChats()
+      .then(setChats)
+      .catch((err) => console.error("Failed to fetch chats:", err));
+  }, []);
+
+  const logOut = async () => {
+    setLoading(true);
     try {
-   const {success}= await logOutUser();
-    if(success){
-       setUser(null)
-    }
+      const { success } = await logOutUser();
+      if (success) {
+        setUser(null);
+      }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
- 
-  }
+  };
   return (
     <>
       {/* Mobile overlay */}
@@ -153,15 +156,30 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
           </p>
 
           <div className="space-y-0.5">
-            {recentChats.map((chat) => (
-              <Link
-                href={"/dashboard/chat"}
-                key={chat}
-                className="w-full text-left block px-3 py-2 rounded-lg text-[13px] text-text-muted hover:bg-bg truncate transition-colors"
-              >
-                {chat}
-              </Link>
-            ))}
+            {chats.length === 0 ? (
+              <p className="px-3 py-2 text-[12px] text-text-muted/60 italic">
+                No chats yet
+              </p>
+            ) : (
+              chats.map((chat) => {
+                const chatPath = `/dashboard/chat/${chat.id}`;
+                const active = pathname === chatPath;
+
+                return (
+                  <Link
+                    href={chatPath}
+                    key={chat.id}
+                    className={`w-full text-left block px-3 py-2 rounded-lg text-[13px] truncate transition-colors ${
+                      active
+                        ? "bg-primary-600/10 text-primary-800 font-medium"
+                        : "text-text-muted hover:bg-bg"
+                    }`}
+                  >
+                    {chat.title}
+                  </Link>
+                );
+              })
+            )}
           </div>
         </nav>
 
