@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Bell, MoreVertical, LoaderPinwheel } from "lucide-react";
+import { Bell, LoaderPinwheel, MoreVertical } from "lucide-react";
 import { Message } from "@/types/message";
 import { sendMessage, getMessages } from "@/services/client/chat.service";
 import { useRouter } from "next/navigation";
@@ -62,6 +62,49 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
   const handleSuggestion = (prompt: string) => {
     setInput(prompt);
     chatInputRef.current?.focus();
+  };
+
+  // ── Retry a user message ────────────────────────────────────────────────
+
+  const handleRetry = async (text: string) => {
+    if (loading) return;
+    setInput(text);
+    // Use a tiny timeout so the state flush happens before handleSend reads `input`
+    await new Promise((r) => setTimeout(r, 0));
+    setInput(text); // ensure it's set
+    // Manually trigger send with the retry text
+    const messageText = text;
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: crypto.randomUUID(),
+        text: messageText,
+        role: "user",
+        createdAt: new Date(),
+      },
+    ]);
+    setLoading(true);
+    setInput("");
+    chatInputRef.current?.resetHeight();
+    try {
+      const reply = await sendMessage(messageText, chatId);
+      setLoading(false);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          text: reply.reply,
+          role: "gemini",
+          createdAt: new Date(),
+        },
+      ]);
+      if (!chatId) {
+        router.push(`/dashboard/chat/${reply.chatId}`);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
   };
 
   // ── Send message ────────────────────────────────────────────────────────
@@ -189,7 +232,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
                 )}
 
                 {/* Messages */}
-                <MessageList messages={messages} loading={loading} />
+                <MessageList messages={messages} loading={loading} onRetry={handleRetry} />
               </>
             )}
 

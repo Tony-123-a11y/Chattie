@@ -33,7 +33,7 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [chats, setChats] = useState<Chat[]>([]);
-   console.log(chats)
+  const [searchQuery, setSearchQuery] = useState("");
   // Fetch all chats on mount
   useEffect(() => {
     getChats()
@@ -119,6 +119,8 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
             <input
               type="text"
               placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-bg rounded-lg pl-9 pr-4 py-2.5 text-[13px] text-text placeholder:text-text-muted outline-none focus:ring-2 focus:ring-primary-200 transition-all"
             />
           </div>
@@ -156,12 +158,30 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
           </p>
 
           <div className="space-y-0.5">
-            {chats.length === 0 ? (
-              <p className="px-3 py-2 text-[12px] text-text-muted/60 italic">
-                No chats yet
-              </p>
-            ) : (
-              chats.map((chat) => {
+            {(() => {
+              if (chats.length === 0) {
+                return (
+                  <p className="px-3 py-2 text-[12px] text-text-muted/60 italic">
+                    No chats yet
+                  </p>
+                );
+              }
+
+              const filteredChats = chats.filter((chat) =>
+                chat.title
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase().trim())
+              );
+
+              if (filteredChats.length === 0) {
+                return (
+                  <p className="px-3 py-2 text-[12px] text-text-muted/60 italic">
+                    No chats match &ldquo;{searchQuery}&rdquo;
+                  </p>
+                );
+              }
+
+              return filteredChats.map((chat) => {
                 const chatPath = `/dashboard/chat/${chat.id}`;
                 const active = pathname === chatPath;
 
@@ -178,8 +198,8 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
                     {chat.title}
                   </Link>
                 );
-              })
-            )}
+              });
+            })()}
           </div>
         </nav>
 
