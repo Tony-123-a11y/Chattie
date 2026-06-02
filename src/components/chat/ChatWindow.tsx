@@ -195,7 +195,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
       {/* Top bar */}
       <div className="shrink-0 flex items-center justify-between px-6 py-3 border-b border-surface bg-bg/80 backdrop-blur-sm">
         <span className="text-[11px] font-semibold text-primary-600 tracking-[0.55px] uppercase">
-          GPT-4 OMNI
+        Gemini-X.X-Flash
         </span>
 
         <div className="flex items-center gap-2 text-text-muted">
@@ -212,7 +212,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
       {/* Main content */}
       <div className="min-h-screen  relative ">
         <div className="w-full  h-full  overflow-y-scroll py-10 gap-8 pb-20">
-          <div className="max-w-3xl  m-auto relative pb-24">
+          <div className="max-w-3xl  m-auto  relative pb-24">
             {/* Loading state while fetching existing messages */}
             {fetching ? (
               <div className="flex flex-col items-center justify-center gap-3 py-20">

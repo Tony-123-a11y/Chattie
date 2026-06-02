@@ -32,8 +32,8 @@ export default function EmptyChat({ onSuggestion }: EmptyChatProps) {
   return (
     <>
       {/* Header */}
-      <div className="flex flex-col items-center gap-4 text-center">
-        <div className="w-14 h-14 rounded-2xl bg-white border border-surface shadow-sm flex items-center justify-center">
+      <div className="flex flex-col  items-center gap-4 text-center  mt-24">
+        <div className="w-14 h-14 rounded-2xl bg-card border border-surface shadow-sm flex items-center justify-center">
           <Sparkles size={24} className="text-primary-600" />
         </div>
 
@@ -55,7 +55,7 @@ export default function EmptyChat({ onSuggestion }: EmptyChatProps) {
           <button
             key={id}
             onClick={() => onSuggestion(prompt)}
-            className="group bg-white border border-surface rounded-2xl p-4 text-left hover:border-primary-200 hover:shadow-md transition-all duration-200 flex flex-col gap-3"
+            className="group bg-card border cursor-pointer border-surface rounded-2xl p-4 text-left hover:border-primary-200 hover:shadow-md transition-all duration-200 flex flex-col gap-3"
           >
             <div className="w-8 h-8 rounded-lg bg-primary-50 flex items-center justify-center group-hover:bg-primary-600/10 transition-colors">
               <Icon size={16} className="text-primary-600" />

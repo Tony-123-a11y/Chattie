@@ -37,7 +37,7 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
     };
 
     return (
-      <div className="w-full bg-white absolute left-1/2 -translate-x-1/2 bottom-0 max-w-3xl m-auto border-surface border rounded-2xl shadow-sm overflow-hidden focus-within:border-primary-200 focus-within:shadow-md transition-all duration-200">
+      <div className="w-full bg-card absolute left-1/2 -translate-x-1/2 bottom-4 max-w-3xl m-auto border-surface border rounded-2xl shadow-sm overflow-hidden focus-within:border-primary-200 focus-within:shadow-md transition-all duration-200">
         <textarea
           ref={textareaRef}
           value={input}
@@ -45,33 +45,17 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
           onKeyDown={handleKeyDown}
           placeholder="Message Chattie..."
           rows={1}
-          className="w-full resize-none bg-transparent px-5 pt-4 pb-2 text-[15px] text-text placeholder:text-border outline-none leading-[1.6] font-sans min-h-[52px] max-h-[160px] overflow-y-auto"
+          className="w-full resize-none bg-transparent px-5 pt-4 pb-2  text-[15px] text-text placeholder:text-border outline-none leading-[1.6] font-sans  max-h-[160px] overflow-y-auto"
         />
 
-        {/* Toolbar */}
-        <div className="flex items-center justify-between px-4 pb-3 pt-1">
-          <div className="flex items-center gap-1">
-            <button className="p-2 rounded-lg text-border hover:text-text-muted hover:bg-bg transition-colors">
-              <Paperclip size={17} />
-            </button>
-
-            <button className="p-2 rounded-lg text-border hover:text-text-muted hover:bg-bg transition-colors">
-              <Mic size={17} />
-            </button>
-
-            <button className="p-2 rounded-lg text-border hover:text-text-muted hover:bg-bg transition-colors">
-              <Image size={17} />
-            </button>
-          </div>
-
-          <button
+     <button
             onClick={onSend}
             disabled={!input.trim()}
-            className="w-9 h-9 rounded-full bg-primary-800 hover:bg-primary-600 disabled:opacity-35 disabled:cursor-not-allowed flex items-center justify-center transition-all duration-200 shadow-sm"
+            className="w-9 h-9 rounded-full absolute right-4  top-1/2 -translate-y-1/2  z-10 bg-primary-800 hover:bg-primary-600 disabled:opacity-35 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center transition-all duration-200 shadow-sm"
           >
             <ArrowUp size={16} className="text-white" />
           </button>
-        </div>
+  
       </div>
     );
   }

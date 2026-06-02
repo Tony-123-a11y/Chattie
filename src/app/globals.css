@@ -17,12 +17,15 @@
 	--color-accent-600: #0F6E56;
 	--color-accent-800: #085041;
 
-	/* Neutral (grays) */
+	/* Neutral (grays) — light defaults */
 	--color-bg: #F1EFE8;
 	--color-surface: #D3D1C7;
 	--color-border: #888780;
 	--color-text-muted: #5F5E5A;
 	--color-text: #2C2C2A;
+
+	/* Card surface (white in light, elevated dark in dark) */
+	--color-card: #ffffff;
 
 	/* Semantic */
 	--color-success: #639922;
@@ -38,4 +41,30 @@
   	--font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
 	--font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
+}
+
+/* ── Dark mode overrides ──────────────────────────────────────────────────── */
+/* Applied when AppearanceContext sets data-theme="dark" on <html>            */
+
+[data-theme="dark"] {
+	--color-bg: #111110;
+	--color-surface: #2A2A28;
+	--color-border: #444441;
+	--color-text-muted: #9A9994;
+	--color-text: #ECEAE3;
+	--color-card: #1C1C1A;
+
+	/* Slightly soften primary/accent tints for dark backgrounds */
+	--color-primary-50: #151324;
+	--color-primary-900: #e2e2ed;
+	--color-primary-800: #504899;
+	--color-primary-200: #3d3780;
+	--color-accent-50: #0d2921;
+	--color-accent-200: #0d5540;
+
+	/* Semantic — darken backgrounds, keep vivid foregrounds */
+	--color-success-bg: #1a2e08;
+	--color-warning-bg: #2d1f05;
+	--color-error-bg: #2d0c0c;
+	--color-info-bg: #0a1e30;
 }

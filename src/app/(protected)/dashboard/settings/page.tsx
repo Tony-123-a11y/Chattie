@@ -30,7 +30,7 @@ export default function AccountSettingsPage() {
   };
 
   return (
-    <div className="flex-1 flex justify-center overflow-y-auto h-screen  bg-[#FAFAFA] px-8 py-10">
+    <div className="flex-1 flex justify-center overflow-y-auto h-screen bg-bg px-8 py-10">
       {/* Page Header */}
       <div>
       <div className="mb-8">
@@ -45,8 +45,8 @@ export default function AccountSettingsPage() {
       <div className="max-w-2xl space-y-6">
 
         {/* ── Profile Information ─────────────────────────────────────── */}
-        <section className="bg-white border border-[#E5E5F0] rounded-2xl overflow-hidden">
-          <div className="px-6 pt-5 pb-4 border-b border-[#F0F0F8]">
+        <section className="bg-card border border-surface rounded-2xl overflow-hidden">
+          <div className="px-6 pt-5 pb-4 border-b border-surface">
             <h2 className="text-base font-semibold text-text">
               Profile Information
             </h2>
@@ -70,7 +70,7 @@ export default function AccountSettingsPage() {
                   </span>
                 </div>
               </div>
-              <button className="px-4 py-2 text-sm font-medium text-text border border-[#D1D5DB] rounded-lg hover:bg-[#F5F5FA] transition-colors">
+              <button className="px-4 py-2 text-sm font-medium text-text border border-surface rounded-lg hover:bg-bg transition-colors cursor-pointer">
                 Change Avatar
               </button>
             </div>
@@ -85,7 +85,7 @@ export default function AccountSettingsPage() {
                   type="text"
                   value={user?.name}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-3 py-2.5 text-sm text-text border border-[#D1D5DB] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition"
+                  className="w-full px-3 py-2.5 text-sm text-text border border-surface rounded-lg bg-card focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition"
                 />
               </div>
               <div>
@@ -96,7 +96,7 @@ export default function AccountSettingsPage() {
                   type="email"
                   value={user?.email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2.5 text-sm text-text border border-[#D1D5DB] rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition"
+                  className="w-full px-3 py-2.5 text-sm text-text border border-surface rounded-lg bg-card focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition"
                 />
               </div>
             </div>
@@ -105,7 +105,7 @@ export default function AccountSettingsPage() {
             <div className="flex justify-end">
               <button
                 onClick={handleSaveChanges}
-                className="px-5 py-2.5 bg-primary-600 hover:bg-primary-800 text-white text-sm font-medium rounded-lg transition-colors"
+                className="px-5 py-2.5 bg-primary-600 hover:bg-primary-800 text-white text-sm font-medium rounded-lg transition-colors cursor-pointer"
               >
                 Save Changes
               </button>
@@ -114,8 +114,8 @@ export default function AccountSettingsPage() {
         </section>
 
         {/* ── Security & Authentication ────────────────────────────────── */}
-        <section className="bg-white border border-[#E5E5F0] rounded-2xl overflow-hidden">
-          <div className="px-6 pt-5 pb-4 border-b border-[#F0F0F8]">
+        <section className="bg-card border border-surface rounded-2xl overflow-hidden">
+          <div className="px-6 pt-5 pb-4 border-b border-surface">
             <h2 className="text-base font-semibold text-text">
               Security &amp; Authentication
             </h2>
@@ -124,7 +124,7 @@ export default function AccountSettingsPage() {
             </p>
           </div>
 
-          <div className="divide-y divide-[#F0F0F8]">
+          <div className="divide-y divide-surface">
             {/* Change Password */}
             <div className="px-6 py-4 flex items-center justify-between gap-4">
               <div>
@@ -138,7 +138,7 @@ export default function AccountSettingsPage() {
               </div>
               <button
                 onClick={handleUpdatePassword}
-                className="shrink-0 flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-text border border-[#D1D5DB] rounded-lg hover:bg-[#F5F5FA] transition-colors"
+                className="shrink-0 flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-text border border-surface rounded-lg hover:bg-bg transition-colors cursor-pointer"
               >
                 Update Password
                 <ChevronRight size={14} />
@@ -161,8 +161,8 @@ export default function AccountSettingsPage() {
                   role="switch"
                   aria-checked={twoFactor}
                   onClick={() => setTwoFactor((v) => !v)}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                    twoFactor ? "bg-primary-600" : "bg-[#D1D5DB]"
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+                    twoFactor ? "bg-primary-600" : "bg-surface"
                   }`}
                 >
                   <span
@@ -173,7 +173,7 @@ export default function AccountSettingsPage() {
                 </button>
                 <button
                   onClick={() => setTwoFactor((v) => !v)}
-                  className="px-4 py-2 text-sm font-medium text-text border border-[#D1D5DB] rounded-lg hover:bg-[#F5F5FA] transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-text border border-surface rounded-lg hover:bg-bg transition-colors cursor-pointer"
                 >
                   {twoFactor ? "Disable 2FA" : "Enable 2FA"}
                 </button>
@@ -208,10 +208,10 @@ export default function AccountSettingsPage() {
             </div>
             <button
               onClick={handleDeleteAccount}
-              className={`shrink-0 self-start sm:self-center px-4 py-2 text-sm font-semibold text-white rounded-lg transition-colors ${
+              className={`shrink-0 self-start sm:self-center px-4 py-2 text-sm font-semibold text-white rounded-lg transition-colors cursor-pointer ${
                 deleteStep === 1
                   ? "bg-[#B91C1C] hover:bg-[#991B1B]"
-                  : "bg-error hover:bg-[#C93B3A]"
+                  : "bg-error hover:bg-error/80"
               }`}
             >
               {deleteStep === 1 ? "Confirm Delete" : "Delete Account"}

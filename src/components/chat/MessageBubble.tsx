@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Copy, Check, RotateCcw } from "lucide-react";
 import { Message } from "@/types/message";
+import { useAppearance } from "@/contexts/AppearanceContext";
 
 interface MessageBubbleProps {
   message: Message;
@@ -20,6 +21,10 @@ export default function MessageBubble({
   onRetry,
 }: MessageBubbleProps) {
   const [copied, setCopied] = useState(false);
+  const { fontSize } = useAppearance();
+
+  const fontSizeClass =
+    fontSize === "small" ? "text-xs" : fontSize === "large" ? "text-base" : "text-sm";
 
   const handleCopy = async () => {
     try {
@@ -64,14 +69,21 @@ export default function MessageBubble({
           className={`
             ml-auto max-w-[66%] rounded-2xl rounded-tr-none
             px-4 py-3 shadow-sm overflow-x-auto transition-all duration-300
-            ${
-              isPending
-                ? "bubble-pending border border-indigo-300"
-                : "bg-primary-50 border border-primary-200 text-primary-900"
+            ${isPending
+              ? "bubble-pending border border-indigo-300"
+              : "bg-primary-50 border border-primary-200 text-primary-900"
             }
           `}
         >
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}
+            components={{
+              p: ({ children }) => (
+                <p className={`leading-[1.6] transition-all duration-200 ${fontSizeClass}`}>
+                  {children}
+                </p>
+              ),
+            }}
+          >
             {message.text}
           </ReactMarkdown>
         </div>
@@ -115,13 +127,24 @@ export default function MessageBubble({
   return (
     <div className="mt-8 group/ai">
       <div
-        className="relative prose
+        className="relative prose dark:prose-invert
           max-w-none
           prose-p:my-2
-          prose-pre:bg-gray-100
+          prose-pre:bg-surface
           prose-code:text-accent-600"
       >
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.text}</ReactMarkdown>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          components={{
+            p: ({ children }) => (
+              <p className={`leading-[1.6] transition-all duration-200 ${fontSizeClass}`}>
+                {children}
+              </p>
+            ),
+          }}
+        >
+          {message.text}
+        </ReactMarkdown>
       </div>
 
       {/* Action bar */}

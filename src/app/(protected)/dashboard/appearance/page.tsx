@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { Sun, Moon, Monitor, Sparkles } from "lucide-react";
+import { useAppearance } from "@/contexts/AppearanceContext";
 
 export default function AppearancePage() {
-  const [theme, setTheme] = useState<"light" | "dark" | "system">("light");
-  const [fontSize, setFontSize] = useState<"small" | "medium" | "large">("medium");
+  const { theme, setTheme, fontSize, setFontSize } = useAppearance();
 
   return (
     <div className="relative flex flex-col h-full bg-bg overflow-hidden font-sans">
@@ -34,7 +33,7 @@ export default function AppearancePage() {
           <div className="flex flex-col gap-6">
             
             {/* Card 1: Theme */}
-            <div className="bg-white border border-surface/50 rounded-2xl p-6 shadow-sm flex flex-col gap-5">
+            <div className="bg-card border border-surface/50 rounded-2xl p-6 shadow-sm flex flex-col gap-5">
               <div className="flex flex-col gap-1">
                 <h2 className="text-[16px] font-bold text-text">Theme</h2>
                 <p className="text-[13px] text-text-muted">
@@ -47,7 +46,7 @@ export default function AppearancePage() {
                   onClick={() => setTheme("light")}
                   className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 cursor-pointer ${
                     theme === "light"
-                      ? "bg-white text-primary-800 shadow-sm font-semibold"
+                      ? "bg-card text-primary-800 shadow-sm font-semibold"
                       : "text-text-muted hover:text-text"
                   }`}
                 >
@@ -59,7 +58,7 @@ export default function AppearancePage() {
                   onClick={() => setTheme("dark")}
                   className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 cursor-pointer ${
                     theme === "dark"
-                      ? "bg-white text-primary-800 shadow-sm font-semibold"
+                      ? "bg-card text-primary-800 shadow-sm font-semibold"
                       : "text-text-muted hover:text-text"
                   }`}
                 >
@@ -71,7 +70,7 @@ export default function AppearancePage() {
                   onClick={() => setTheme("system")}
                   className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 cursor-pointer ${
                     theme === "system"
-                      ? "bg-white text-primary-800 shadow-sm font-semibold"
+                      ? "bg-card text-primary-800 shadow-sm font-semibold"
                       : "text-text-muted hover:text-text"
                   }`}
                 >
@@ -82,7 +81,7 @@ export default function AppearancePage() {
             </div>
 
             {/* Card 2: Font Size */}
-            <div className="bg-white border border-surface/50 rounded-2xl p-6 shadow-sm flex flex-col gap-5">
+            <div className="bg-card border border-surface/50 rounded-2xl p-6 shadow-sm flex flex-col gap-5">
               <div className="flex flex-col gap-1">
                 <h2 className="text-[16px] font-bold text-text">Font Size</h2>
                 <p className="text-[13px] text-text-muted">
@@ -109,7 +108,7 @@ export default function AppearancePage() {
                         className={`w-[18px] h-[18px] rounded-full border flex items-center justify-center transition-all ${
                           isActive
                             ? "border-primary-800 bg-primary-800"
-                            : "border-surface bg-white group-hover:border-primary-400"
+                            : "border-surface bg-card group-hover:border-primary-400"
                         }`}
                       >
                         {isActive && <div className="w-1.5 h-1.5 rounded-full bg-white animate-scale-up" />}

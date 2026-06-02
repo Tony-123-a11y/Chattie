@@ -68,7 +68,7 @@ const page = () => {
   return (
     <main className="min-h-screen bg-bg text-text flex flex-col">
       <div className="flex-1 flex items-center justify-center px-4 py-16">
-        <div className="w-full max-w-md bg-white rounded-2xl border border-surface shadow-sm p-10">
+        <div className="w-full max-w-md bg-card rounded-2xl border border-surface shadow-sm p-10">
           <div className="text-center mb-6">
             <h1 className="text-3xl font-semibold text-primary-800">Chattie</h1>
             <p className="text-text-muted mt-2 text-sm">Create an account to start chatting.</p>
@@ -105,7 +105,7 @@ const page = () => {
                 type="text"
                 placeholder="John Doe"
                 {...register("name")}
-                className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
+                className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted bg-card focus:outline-none focus:border-primary-400"
               />
 
               {errors.name && (
@@ -137,7 +137,7 @@ const page = () => {
                   placeholder='••••••••'
                   autoComplete='new-password'
                   {...register("password")}
-                  className="w-full border border-surface  rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
+                  className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted bg-card focus:outline-none focus:border-primary-400"
                 />
                 <button
                   type="button"
@@ -161,7 +161,7 @@ const page = () => {
                   type={"password"}
                   {...register("confirmPassword")}
                   placeholder='••••••••'
-                  className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
+                  className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted bg-card focus:outline-none focus:border-primary-400"
                 />
 
                 {errors.confirmPassword && (

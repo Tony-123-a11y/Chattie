@@ -66,7 +66,7 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
       <aside
         className={`
     fixed top-0 left-0 h-full w-[260px]
-    bg-white border-r border-surface
+    bg-card border-r border-surface
     z-30 flex flex-col transition-transform duration-300
     ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
     lg:translate-x-0 lg:static lg:z-auto
@@ -235,7 +235,7 @@ export default function Sidebar({ mobileOpen, onClose }: SidebarProps) {
           {/* Settings popup */}
           {settingsOpen && (
 
-            <div className="absolute bottom-[calc(100%-8px)] left-2 right-2 bg-white border border-surface rounded-xl shadow-lg py-1.5 z-10">
+            <div className="absolute bottom-[calc(100%-8px)] left-2 right-2 bg-card border border-surface rounded-xl shadow-lg py-1.5 z-10">
 
               <Link
                 href="/dashboard/appearance"

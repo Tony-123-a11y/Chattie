@@ -47,7 +47,7 @@ const page = () => {
   return (
     <main className="min-h-screen bg-bg text-text flex flex-col">
       <div className="flex-1 flex items-center justify-center px-4 py-16">
-        <div className="w-full max-w-md bg-white rounded-2xl border border-surface shadow-sm p-10">
+        <div className="w-full max-w-md bg-card rounded-2xl border border-surface shadow-sm p-10">
           <div className="text-center mb-6">
             <h1 className="text-3xl font-semibold text-primary-800">Welcome Back</h1>
             <p className="text-text-muted mt-2 text-sm">Login to your account to continue</p>
@@ -78,7 +78,7 @@ const page = () => {
                 type="email"
                 {...register("email")}
                 placeholder="you@example.com"
-                className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
+                className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted bg-card focus:outline-none focus:border-primary-400"
               />
               {errors.email && (
                 <p className="mt-1 text-sm text-red-500">
@@ -93,7 +93,7 @@ const page = () => {
                 {...register("password")}
                 type="password"
                 placeholder="••••••••"
-                className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted focus:outline-none focus:border-primary-400"
+                className="w-full border border-surface rounded-lg px-3 py-2.5 text-sm placeholder:text-text-muted bg-card focus:outline-none focus:border-primary-400"
               />
               {errors.password && (
                 <p className="mt-1 text-sm text-red-500">
