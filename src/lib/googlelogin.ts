@@ -7,7 +7,7 @@ export function loginWithGoogle() {
     
   account.createOAuth2Session(
     OAuthProvider.Google,
-    "http://localhost:3000/dashboard",
-    "http://localhost:3000/auth/login"
+    `${process.env.NEXT_PUBLIC_CLIENT_URL}/dashboard`,
+    `${process.env.NEXT_PUBLIC_CLIENT_URL}/auth/login`
   );
 }
