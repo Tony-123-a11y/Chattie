@@ -36,6 +36,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
     const fetchMessages = async () => {
       try {
         const loaded = await getMessages(chatId);
+          console.log("reply:",loaded)
         setMessages(loaded);
       } catch (error) {
         console.error("Failed to fetch messages:", error);
@@ -137,7 +138,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
     try {
       // Call backend — include chatId if we're in an existing conversation
       const reply = await sendMessage(messageText, chatId);
-
+   
       // Stop loading
       setLoading(false);
 
@@ -193,25 +194,17 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
       </div>
 
       {/* Top bar */}
-      <div className="shrink-0 flex items-center justify-between px-6 py-3 border-b border-surface bg-bg/80 backdrop-blur-sm">
-        <span className="text-[11px] font-semibold text-primary-600 tracking-[0.55px] uppercase">
+      <div className="shrink-0 flex absolute top-0 bg-card z-10 border w-full left-0  items-center justify-between px-6 py-5 border-b border-surface  backdrop-blur-sm">
+        <span className="text-[11px]  font-semibold text-primary-600 tracking-[0.55px] uppercase">
         Gemini-X.X-Flash
         </span>
 
-        <div className="flex items-center gap-2 text-text-muted">
-          <button className="p-1.5 rounded-lg hover:bg-surface/50 transition-colors">
-            <Bell size={18} />
-          </button>
-
-          <button className="p-1.5 rounded-lg hover:bg-surface/50 transition-colors">
-            <MoreVertical size={18} />
-          </button>
-        </div>
+      
       </div>
 
       {/* Main content */}
       <div className="min-h-screen  relative ">
-        <div className="w-full  h-full  overflow-y-scroll py-10 gap-8 pb-20">
+        <div className="w-full  h-full  overflow-y-scroll scrollbar-primary py-10 gap-8 pb-20">
           <div className="max-w-3xl  m-auto  relative pb-24">
             {/* Loading state while fetching existing messages */}
             {fetching ? (

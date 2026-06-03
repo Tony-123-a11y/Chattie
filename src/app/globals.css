@@ -37,8 +37,8 @@
 	--color-info: #378ADD;
 	--color-info-bg: #E6F1FB;
 
-  /* Typography */
-  	--font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+	/* Typography */
+	--font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
 	--font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
 }
@@ -67,4 +67,29 @@
 	--color-warning-bg: #2d1f05;
 	--color-error-bg: #2d0c0c;
 	--color-info-bg: #0a1e30;
+}
+
+/* ── Custom scrollbar ─────────────────────────────────────────────────────── */
+
+.scrollbar-primary {
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-primary-600) transparent;
+}
+
+.scrollbar-primary::-webkit-scrollbar {
+	width: 4px;
+}
+
+.scrollbar-primary::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.scrollbar-primary::-webkit-scrollbar-thumb {
+	background-color: var(--color-primary-600);
+	border-radius: 9999px;
+	transition: background-color 0.2s ease;
+}
+
+.scrollbar-primary::-webkit-scrollbar-thumb:hover {
+	background-color: var(--color-primary-400);
 }
