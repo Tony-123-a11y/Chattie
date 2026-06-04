@@ -204,7 +204,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
       {/* Main content */}
       <div className="min-h-screen  relative ">
         <div className="w-full h-full overflow-y-scroll scrollbar-primary pt-4 pb-4 gap-8">
-          <div className="max-w-3xl mx-auto relative pb-24 px-4 md:px-6">
+          <div className="max-w-3xl mx-auto relative pb-24 pt-18   px-4 md:px-6">
             {/* Loading state while fetching existing messages */}
             {fetching ? (
               <div className="flex flex-col items-center justify-center gap-3 py-20">

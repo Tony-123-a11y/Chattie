@@ -96,7 +96,7 @@ export default function Sidebar({
       {/* Mobile overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 bg-black/30 z-20 lg:hidden"
+          className="fixed inset-0 bg-black/30 z-90 lg:hidden"
           onClick={onClose}
         />
       )}
@@ -107,7 +107,7 @@ export default function Sidebar({
         className={`
           fixed top-0 left-0 h-full
           bg-card border-r border-surface
-          z-30 flex flex-col
+          z-100 flex flex-col
           transition-all duration-300 ease-in-out
           overflow-hidden
           w-[260px]
@@ -124,7 +124,7 @@ export default function Sidebar({
           {/* Logo avatar — hidden on lg when collapsed */}
           <div className={`w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center shadow-sm shrink-0 ${collapsed ? "hidden lg:hidden" : ""}`}>
             <span className="text-primary-50 font-bold text-lg leading-none font-sans">
-              A
+              {user?.name?.[0]?.toUpperCase() || "U"}
             </span>
           </div>
 
@@ -271,7 +271,7 @@ export default function Sidebar({
             <div className="flex items-center gap-3 px-2">
               <div className="w-10 h-10 rounded-full bg-primary-600 flex items-center justify-center shadow-sm shrink-0">
                 <span className="text-primary-50 font-bold text-xl leading-none font-sans">
-                  A
+                  {user?.name?.[0]?.toUpperCase() || "U"}
                 </span>
               </div>
 
@@ -297,15 +297,16 @@ export default function Sidebar({
               <div className="absolute bottom-[calc(100%-8px)] left-2 right-2 bg-card border border-surface rounded-xl shadow-lg py-1.5 z-10">
 
                 <Link
-                  href="/dashboard/settings"
+                  href="/dashboard/appearance"
+                  onClick={() => { setSettingsOpen(false); onClose(); }}
                   className="w-full cursor-pointer flex items-center gap-3 px-3 py-2 text-[13px] text-text-muted hover:bg-bg transition-colors rounded-lg mx-auto"
                 >
-                  <User size={16.667} />
-                  Account
+                  <Sun size={16.667} />
+                  Appearance
                 </Link>
 
                 <button
-                  onClick={logOut}
+                  onClick={() => { setSettingsOpen(false); onClose(); logOut(); }}
                   className="w-full cursor-pointer flex items-center gap-3 px-3 py-2 text-[13px] text-text-muted hover:bg-bg transition-colors rounded-lg mx-auto"
                 >
                   <LogOut size={16.667} />
@@ -398,7 +399,7 @@ export default function Sidebar({
             className="mb-6 w-9 h-9 rounded-full bg-primary-600 flex items-center justify-center shadow-sm shrink-0"
           >
             <span className="text-primary-50 font-bold text-base leading-none font-sans">
-              A
+              {user?.name?.[0]?.toUpperCase() || "U"}
             </span>
           </button>
         </div>
