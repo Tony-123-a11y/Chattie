@@ -27,7 +27,7 @@ export default function DashboardLayout({
         className={`flex-1 flex flex-col min-w-0 relative transition-all duration-300 ease-in-out`}
       >
         {/* Mobile top bar */}
-        <div className="lg:hidden flex items-center gap-3 px-4 py-3 bg-card border-b border-surface shrink-0">
+        <div className="lg:hidden fixed w-full top-0 left-0 z-50 flex items-center gap-3 px-4 py-5 bg-card border-b border-surface shrink-0">
           <button
             onClick={() => setSidebarOpen(true)}
             className="text-text-muted hover:text-text transition-colors"
