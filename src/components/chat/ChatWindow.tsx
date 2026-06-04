@@ -193,7 +193,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
       </div>
 
       {/* Top bar */}
-      <div className="shrink-0 sticky top-0 bg-card/95 z-10 w-full flex items-center justify-between px-4 md:px-6 py-4 border-b border-surface backdrop-blur-sm">
+      <div className="shrink-0 sticky max-lg:hidden top-0 bg-card/95 z-10 w-full flex items-center justify-between px-4 md:px-6 py-4 border-b border-surface backdrop-blur-sm">
         <span className="text-[11px]  font-semibold text-primary-600 tracking-[0.55px] uppercase">
         Gemini-X.X-Flash
         </span>

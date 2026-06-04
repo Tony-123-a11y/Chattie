@@ -69,6 +69,15 @@ export default function Navbar() {
           </Link>
         </div>)
         }
+        {/* Mobile Log In — shown only on small screens when logged out */}
+        {!loading && !user && (
+          <Link
+            href="/login"
+            className="md:hidden text-sm font-semibold text-text-muted hover:text-primary-800 border border-border/40 hover:border-primary-400 bg-card/60 hover:bg-surface px-4 py-2 rounded-lg transition-all duration-200"
+          >
+            Log In
+          </Link>
+        )}
       
 
      
