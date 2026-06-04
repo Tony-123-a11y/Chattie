@@ -37,7 +37,8 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
     };
 
     return (
-      <div className="w-full bg-card absolute left-1/2 -translate-x-1/2 bottom-4 max-w-3xl m-auto border-surface border rounded-2xl shadow-sm overflow-hidden focus-within:border-primary-200 focus-within:shadow-md transition-all duration-200">
+      <div className="w-full absolute left-1/2 -translate-x-1/2 bottom-4 max-w-3xl px-4 md:px-6">
+        <div className="relative bg-card border-surface border rounded-2xl shadow-sm overflow-hidden focus-within:border-primary-200 focus-within:shadow-md transition-all duration-200">
         <textarea
           ref={textareaRef}
           value={input}
@@ -56,8 +57,10 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
             <ArrowUp size={16} className="text-white" />
           </button>
   
+        </div>
       </div>
     );
+
   }
 );
 

@@ -71,56 +71,10 @@ export default function Navbar() {
         }
       
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={toggleMenu}
-          className="md:hidden cursor-pointer p-2 text-text-muted hover:text-text hover:bg-surface/55 rounded-lg transition-colors"
-          aria-label="Toggle Menu"
-        >
-          {isOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+     
       </div>
 
-      {/* Mobile Nav Drawer */}
-      <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-bg border-b border-border/10 ${
-          isOpen ? "max-h-[260px] opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <div className="px-6 py-4 flex flex-col gap-4">
-          <a
-            href="#features"
-            onClick={() => setIsOpen(false)}
-            className="text-base font-medium text-text-muted hover:text-primary-900 py-1 transition-colors"
-          >
-            Features
-          </a>
-          <a
-            href="#pricing"
-            onClick={() => setIsOpen(false)}
-            className="text-base font-medium text-text-muted hover:text-primary-900 py-1 transition-colors"
-          >
-            Pricing
-          </a>
-          <hr className="border-border/10 my-1" />
-          <div className="flex flex-col gap-3">
-            <Link
-              href="/login"
-              onClick={() => setIsOpen(false)}
-              className="cursor-pointer text-center text-sm font-medium text-text-muted hover:text-primary-800 hover:bg-surface/60 py-2.5 transition-colors rounded-lg border border-border/25 bg-card/50"
-            >
-              Log In
-            </Link>
-            <Link
-              href="/signup"
-              onClick={() => setIsOpen(false)}
-              className="cursor-pointer text-center text-sm font-medium bg-primary-800 hover:bg-primary-600 text-primary-50 py-2.5 rounded-lg shadow-sm transition-colors"
-            >
-              Get Started Free
-            </Link>
-          </div>
-        </div>
-      </div>
+     
     </header>
   );
 }

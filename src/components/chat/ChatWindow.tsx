@@ -193,7 +193,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
       </div>
 
       {/* Top bar */}
-      <div className="shrink-0 flex absolute top-0 bg-card z-10 border w-full left-0  items-center justify-between px-6 py-5 border-b border-surface  backdrop-blur-sm">
+      <div className="shrink-0 sticky top-0 bg-card/95 z-10 w-full flex items-center justify-between px-4 md:px-6 py-4 border-b border-surface backdrop-blur-sm">
         <span className="text-[11px]  font-semibold text-primary-600 tracking-[0.55px] uppercase">
         Gemini-X.X-Flash
         </span>
@@ -203,7 +203,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
 
       {/* Main content */}
       <div className="min-h-screen  relative ">
-        <div className="w-full h-full overflow-y-scroll scrollbar-primary pt-20 pb-4 gap-8">
+        <div className="w-full h-full overflow-y-scroll scrollbar-primary pt-4 pb-4 gap-8">
           <div className="max-w-3xl mx-auto relative pb-24 px-4 md:px-6">
             {/* Loading state while fetching existing messages */}
             {fetching ? (
