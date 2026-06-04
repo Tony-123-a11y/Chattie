@@ -50,12 +50,12 @@ export default function EmptyChat({ onSuggestion }: EmptyChatProps) {
       </div>
 
       {/* Suggestion cards */}
-      <div className="flex overflow-x-auto sm:grid sm:grid-cols-3 gap-3 mt-4 w-full pb-4 sm:pb-0 snap-x scrollbar-hide">
+      <div className="flex grid grid-cols-3 gap-3 mt-4 w-full pb-4 sm:pb-0 snap-x ">
         {suggestions.map(({ id, icon: Icon, label, sublabel, prompt }) => (
           <button
             key={id}
             onClick={() => onSuggestion(prompt)}
-            className="group bg-card border cursor-pointer border-surface rounded-2xl p-3 sm:p-4 text-left hover:border-primary-200 hover:shadow-md transition-all duration-200 flex flex-row sm:flex-col items-center sm:items-start gap-3 shrink-0 snap-center w-[80%] sm:w-auto"
+            className="group bg-card border cursor-pointer border-surface rounded-2xl p-3 sm:p-4  hover:border-primary-200 hover:shadow-md transition-all duration-200 flex flex-col justify-center items-center gap-4 max-lg:text-center"
           >
             <div className="w-8 h-8 rounded-lg bg-primary-50 flex items-center justify-center shrink-0 group-hover:bg-primary-600/10 transition-colors">
               <Icon size={16} className="text-primary-600" />
