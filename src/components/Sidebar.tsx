@@ -166,6 +166,7 @@ export default function Sidebar({
           <div className="px-4 mb-3 shrink-0">
             <Link
               href="/dashboard"
+              onClick={() => onClose()}
               className="flex items-center justify-center gap-2 w-full bg-primary-800 hover:bg-primary-600 text-white font-medium text-[15px] px-4 py-3 rounded-lg transition-colors shadow-sm"
             >
               <Plus size={14} />
@@ -203,6 +204,7 @@ export default function Sidebar({
                 <Link
                   key={href}
                   href={href}
+                  onClick={() => onClose()}
                   className={`flex items-center gap-3 px-3 py-2 rounded-lg text-[15px] transition-colors ${active
                     ? "bg-primary-600/10 text-primary-800 font-medium"
                     : "text-text-muted hover:bg-bg"
@@ -250,6 +252,7 @@ export default function Sidebar({
                     <Link
                       href={chatPath}
                       key={chat.id}
+                      onClick={() => onClose()}
                       className={`w-full text-left block px-3 py-2 rounded-lg text-[13px] truncate transition-colors ${active
                         ? "bg-primary-600/10 text-primary-800 font-medium"
                         : "text-text-muted hover:bg-bg"
