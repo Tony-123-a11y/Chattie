@@ -35,14 +35,14 @@ export default function Sidebar({
   onClose,
   onCollapsedChange,
 }: SidebarProps) {
-  const { setUser, setLoading } = useUser();
+  const { user, setUser, setLoading } = useUser();
   const pathname = usePathname();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [chats, setChats] = useState<Chat[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [collapsed, setCollapsed] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
-
+  console.log(settingsOpen)
   // Close settings popup when clicking anywhere outside it
   useEffect(() => {
     if (!settingsOpen) return;
@@ -118,9 +118,8 @@ export default function Sidebar({
       >
         {/* Top: Logo + collapse */}
         <div
-          className={`flex items-center shrink-0 py-4 ${
-            collapsed ? "justify-center px-4 hidden" : "justify-between px-6 "
-          }`}
+          className={`flex items-center shrink-0 py-4 ${collapsed ? "justify-center px-4 hidden" : "justify-between px-6 "
+            }`}
         >
           {/* Logo avatar — hidden on lg when collapsed */}
           <div className={`w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center shadow-sm shrink-0 ${collapsed ? "hidden lg:hidden" : ""}`}>
@@ -133,9 +132,8 @@ export default function Sidebar({
           <button
             onClick={toggleCollapse}
             title="Expand sidebar"
-            className={`group relative p-2 rounded-lg text-text-muted hover:text-primary-600 hover:bg-primary-600/10 transition-colors ${
-              collapsed ? "hidden lg:flex" : "hidden"
-            }`}
+            className={`group relative p-2 rounded-lg text-text-muted hover:text-primary-600 hover:bg-primary-600/10 transition-colors ${collapsed ? "hidden lg:flex" : "hidden"
+              }`}
           >
             <PanelLeftOpen size={18} />
             <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-md bg-surface px-2 py-1 text-[11px] font-medium text-text-muted shadow opacity-0 group-hover:opacity-100 transition-opacity duration-150">
@@ -147,9 +145,8 @@ export default function Sidebar({
           <button
             onClick={toggleCollapse}
             title="Collapse sidebar"
-            className={`group relative hidden lg:flex p-1 rounded-lg text-text-muted hover:text-primary-600 hover:bg-primary-600/10 transition-colors ${
-              collapsed ? "!hidden" : ""
-            }`}
+            className={`group relative hidden lg:flex p-1 rounded-lg text-text-muted hover:text-primary-600 hover:bg-primary-600/10 transition-colors ${collapsed ? "!hidden" : ""
+              }`}
           >
             <PanelLeftClose size={16} />
             <span className="pointer-events-none absolute right-full top-1/2 -translate-y-1/2 mr-2 whitespace-nowrap rounded-md bg-surface px-2 py-1 text-[11px] font-medium text-text-muted shadow opacity-0 group-hover:opacity-100 transition-opacity duration-150">
@@ -157,7 +154,7 @@ export default function Sidebar({
             </span>
           </button>
 
-         
+
         </div>
 
         {/* ── EXPANDED content ───────────────────────────────────────────── */}
@@ -207,8 +204,8 @@ export default function Sidebar({
                   key={href}
                   href={href}
                   className={`flex items-center gap-3 px-3 py-2 rounded-lg text-[15px] transition-colors ${active
-                      ? "bg-primary-600/10 text-primary-800 font-medium"
-                      : "text-text-muted hover:bg-bg"
+                    ? "bg-primary-600/10 text-primary-800 font-medium"
+                    : "text-text-muted hover:bg-bg"
                     }`}
                 >
                   <Icon size={15} />
@@ -254,8 +251,8 @@ export default function Sidebar({
                       href={chatPath}
                       key={chat.id}
                       className={`w-full text-left block px-3 py-2 rounded-lg text-[13px] truncate transition-colors ${active
-                          ? "bg-primary-600/10 text-primary-800 font-medium"
-                          : "text-text-muted hover:bg-bg"
+                        ? "bg-primary-600/10 text-primary-800 font-medium"
+                        : "text-text-muted hover:bg-bg"
                         }`}
                     >
                       {chat.title}
@@ -267,7 +264,7 @@ export default function Sidebar({
           </nav>
 
           {/* Footer — expanded */}
-          <div className="shrink-0 mx-4 pt-4 border-t border-surface pb-6 relative">
+          <div ref={settingsRef} className="shrink-0 mx-4 pt-4 border-t border-surface pb-6 relative">
             <div className="flex items-center gap-3 px-2">
               <div className="w-10 h-10 rounded-full bg-primary-600 flex items-center justify-center shadow-sm shrink-0">
                 <span className="text-primary-50 font-bold text-xl leading-none font-sans">
@@ -277,10 +274,7 @@ export default function Sidebar({
 
               <div className="flex-1 min-w-0">
                 <p className="text-[15px] font-bold text-primary-800 truncate leading-snug">
-                  AI Architect
-                </p>
-                <p className="text-[11px] font-medium text-text-muted tracking-[0.44px]">
-                  Pro Plan
+                  {user?.name}
                 </p>
               </div>
 
@@ -297,15 +291,7 @@ export default function Sidebar({
 
             {/* Settings popup */}
             {settingsOpen && (
-              <div ref={settingsRef} className="absolute bottom-[calc(100%-8px)] left-2 right-2 bg-card border border-surface rounded-xl shadow-lg py-1.5 z-10">
-                <Link
-                  href="/dashboard/appearance"
-                  onClick={() => onClose()}
-                  className="w-full flex items-center gap-3 px-3 py-2 cursor-pointer text-[13px] text-text-muted hover:bg-bg transition-colors rounded-lg mx-auto"
-                >
-                  <Sun size={16.667} />
-                  Appearance
-                </Link>
+              <div className="absolute bottom-[calc(100%-8px)] left-2 right-2 bg-card border border-surface rounded-xl shadow-lg py-1.5 z-10">
 
                 <Link
                   href="/dashboard/settings"
@@ -377,8 +363,8 @@ export default function Sidebar({
             title="Help"
             onClick={(e) => e.stopPropagation()}
             className={`p-2 rounded-lg transition-colors ${pathname === "/login"
-                ? "bg-primary-600/10 text-primary-800"
-                : "text-text-muted hover:text-text hover:bg-surface/50"
+              ? "bg-primary-600/10 text-primary-800"
+              : "text-text-muted hover:text-text hover:bg-surface/50"
               }`}
           >
             <HelpCircle size={18} />
