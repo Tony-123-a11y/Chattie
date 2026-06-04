@@ -127,11 +127,20 @@ export default function MessageBubble({
   return (
     <div className="mt-8 group/ai">
       <div
-        className="relative prose dark:prose-invert
-          max-w-none
-          prose-p:my-2
-          prose-pre:bg-surface
-          prose-code:text-accent-600"
+        className="
+         relative prose
+  max-w-none
+
+  text-text
+  prose-p:text-text
+  prose-headings:text-text
+  prose-strong:text-text
+
+  prose-pre:bg-surface
+  prose-code:text-accent-400
+
+
+        "
       >
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}

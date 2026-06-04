@@ -45,7 +45,7 @@ export default function Navbar() {
         {
           loading ? (<div  className="w-8 h-8 relative rounded-full bg-primary-600 flex items-center justify-center shadow-sm">
             <span className="bg-primary-50/40 absolute inset-0 flex items-center justify-center  font-bold text-lg leading-none font-sans">
-              <Loader2 className="animate-spin text-white" size={18}/>
+              <Loader2 className="animate-spin text-primary-50" size={18}/>
             </span>
           </div>)
           : user ? 
@@ -63,7 +63,7 @@ export default function Navbar() {
           </Link>
           <Link
             href="/signup"
-            className="bg-primary-800 hover:bg-primary-900 text-white px-4.5 py-2.5 rounded-lg text-sm font-medium transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 duration-200"
+          className="cursor-pointer bg-primary-800 hover:bg-primary-600 text-primary-50 px-4.5 py-2.5 rounded-lg text-sm font-medium transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 duration-200"
           >
             Get Started Free
           </Link>
@@ -74,7 +74,7 @@ export default function Navbar() {
         {/* Mobile Menu Button */}
         <button
           onClick={toggleMenu}
-          className="md:hidden p-2 text-text-muted hover:text-text hover:bg-surface/55 rounded-lg transition-colors"
+          className="md:hidden cursor-pointer p-2 text-text-muted hover:text-text hover:bg-surface/55 rounded-lg transition-colors"
           aria-label="Toggle Menu"
         >
           {isOpen ? <X size={20} /> : <Menu size={20} />}
@@ -107,14 +107,14 @@ export default function Navbar() {
             <Link
               href="/login"
               onClick={() => setIsOpen(false)}
-              className="text-center text-sm font-medium text-text-muted hover:text-primary-900 py-2.5 transition-colors rounded-lg border border-border/25 bg-white/50"
+              className="cursor-pointer text-center text-sm font-medium text-text-muted hover:text-primary-800 hover:bg-surface/60 py-2.5 transition-colors rounded-lg border border-border/25 bg-card/50"
             >
               Log In
             </Link>
             <Link
               href="/signup"
               onClick={() => setIsOpen(false)}
-              className="text-center text-sm font-medium bg-primary-800 hover:bg-primary-900 text-white py-2.5 rounded-lg shadow-sm transition-colors"
+              className="cursor-pointer text-center text-sm font-medium bg-primary-800 hover:bg-primary-600 text-primary-50 py-2.5 rounded-lg shadow-sm transition-colors"
             >
               Get Started Free
             </Link>

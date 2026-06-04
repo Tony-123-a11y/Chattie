@@ -13,7 +13,7 @@
 	/* Accent (teal) */
 	--color-accent-50: #E1F5EE;
 	--color-accent-200: #5DCAA5;
-	--color-accent-400: #1D9E75;
+	--color-accent-400: #085041;
 	--color-accent-600: #0F6E56;
 	--color-accent-800: #085041;
 
@@ -61,6 +61,8 @@
 	--color-primary-200: #3d3780;
 	--color-accent-50: #0d2921;
 	--color-accent-200: #0d5540;
+	--color-accent-400: #7bf1a8;
+
 
 	/* Semantic — darken backgrounds, keep vivid foregrounds */
 	--color-success-bg: #1a2e08;

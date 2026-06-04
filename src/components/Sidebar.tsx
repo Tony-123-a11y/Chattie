@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -41,6 +41,19 @@ export default function Sidebar({
   const [chats, setChats] = useState<Chat[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [collapsed, setCollapsed] = useState(false);
+  const settingsRef = useRef<HTMLDivElement>(null);
+
+  // Close settings popup when clicking anywhere outside it
+  useEffect(() => {
+    if (!settingsOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (settingsRef.current && !settingsRef.current.contains(e.target as Node)) {
+        setSettingsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [settingsOpen]);
 
   // Notify parent whenever collapsed state changes
   useEffect(() => {
@@ -284,7 +297,7 @@ export default function Sidebar({
 
             {/* Settings popup */}
             {settingsOpen && (
-              <div className="absolute bottom-[calc(100%-8px)] left-2 right-2 bg-card border border-surface rounded-xl shadow-lg py-1.5 z-10">
+              <div ref={settingsRef} className="absolute bottom-[calc(100%-8px)] left-2 right-2 bg-card border border-surface rounded-xl shadow-lg py-1.5 z-10">
                 <Link
                   href="/dashboard/appearance"
                   onClick={() => onClose()}
