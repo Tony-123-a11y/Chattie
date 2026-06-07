@@ -23,23 +23,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop Nav Links */}
-        <nav className="hidden md:flex items-center gap-8">
-          <a
-            href="#features"
-            className="group text-sm font-medium text-text-muted hover:text-primary-900 transition-colors relative py-1"
-          >
-            Features
-            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-primary-600 transition-all duration-300 group-hover:w-full" />
-          </a>
-          <a
-            href="#pricing"
-            className="group text-sm font-medium text-text-muted hover:text-primary-900 transition-colors relative py-1"
-          >
-            Pricing
-            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-primary-600 transition-all duration-300 group-hover:w-full" />
-          </a>
-        </nav>
+
 
         {/* Desktop CTA Buttons */}
         {
